@@ -4,7 +4,7 @@ const cors = require("cors");
 const body = require("body-parser");
 const { Location, Image } = require("./models");
 const path = require("path");
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.use(cors());
 
 //GET LOCATIONS
@@ -46,18 +46,18 @@ app.post("/locations", async (req, res) => {
 
 //UPDATE LOCATIONS
 app.put("/locations/:id", async (req, res) => {
-    try {
-      const idToUpdate = req.params.id;
-      const gameDataToUpdate = req.body;
-      const gameToUpdate = await Game.findByPk(idToUpdate);
-      if (gameToUpdate) gameToUpdate.update(gameDataToUpdate);
-      res.json(gameToUpdate);
-    } catch (e) {
-      res.json({
-        message: e.message
-      });
-    }
-  });
+  try {
+    const idToUpdate = req.params.id;
+    const gameDataToUpdate = req.body;
+    const gameToUpdate = await Game.findByPk(idToUpdate);
+    if (gameToUpdate) gameToUpdate.update(gameDataToUpdate);
+    res.json(gameToUpdate);
+  } catch (e) {
+    res.json({
+      message: e.message
+    });
+  }
+});
 
 // DELETE LOCATIONS AND RELATED IMAGES
 app.delete("/locations/:id", async (req, res) => {
@@ -72,4 +72,8 @@ app.delete("/locations/:id", async (req, res) => {
       message: e.message
     });
   }
+});
+
+app.listen(PORT, () => {
+  console.log(`Listening on port: ${PORT}`);
 });
