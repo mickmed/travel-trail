@@ -4,7 +4,8 @@ const { data } = require('./seedLocations.js');
 function parseData() {
     
   const locations = data.locations.map(location => ({
-    name: location.name,
+    city: location.city,
+    country: location.country,
     summary: location.summary,
     latitude: location.latitude,
     longitude: location.longitude

@@ -10,7 +10,8 @@ const db = new Sequelize({
 const Op = Sequelize.Op
 
 const Location = db.define('location', {
-	name: Sequelize.STRING,
+	city: Sequelize.STRING,
+	country: Sequelize.STRING,
 	summary: Sequelize.TEXT,
 	latitude: Sequelize.FLOAT,
 	longitude: Sequelize.FLOAT

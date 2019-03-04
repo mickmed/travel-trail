@@ -6,9 +6,13 @@ const { Location, Image } = require("./models");
 const path = require("path");
 const PORT = 3000;
 app.use(cors());
+app.use(body.json({ limit: '1000000000000000mb' }));
+app.use('/', express.static('./build/'));
+
 
 //GET LOCATIONS
 app.get("/locations", async (req, res) => {
+    console.log(req.body)
   try {
     const location = await Location.findAll({ include: [Image] });
     res.json(location);
@@ -20,7 +24,7 @@ app.get("/locations", async (req, res) => {
 //GET LOCATION BY ID
 app.get("/locations/:id", async (req, res) => {
   try {
-    const exhibit = await Location.findByPk(req.params.id, {
+    const location = await Location.findByPk(req.params.id, {
       include: [Image]
     });
     res.json(location);
@@ -31,10 +35,13 @@ app.get("/locations/:id", async (req, res) => {
 
 //POST LOCATIONS WITH IMAGES
 app.post("/locations", async (req, res) => {
+    console.log(req.body)
+    const {city, country, summary, latitude, longitude, images } = req.body
+    
   try {
-    let exhibit = await Exhibit.create({ artist, name, description });
-    let exhibitImages = await Image.bulkCreate(images, { returning: true });
-    await exhibit.setImages(exhibitImages);
+    let location = await Location.create({city, country, summary, latitude, longitude});
+    let locationImages = await Image.bulkCreate(images, { returning: true });
+    await location.setImages(locationImages);
 
     res.send({
       message: "Posted"
@@ -47,11 +54,12 @@ app.post("/locations", async (req, res) => {
 //UPDATE LOCATIONS
 app.put("/locations/:id", async (req, res) => {
   try {
-    const idToUpdate = req.params.id;
-    const gameDataToUpdate = req.body;
-    const gameToUpdate = await Game.findByPk(idToUpdate);
-    if (gameToUpdate) gameToUpdate.update(gameDataToUpdate);
-    res.json(gameToUpdate);
+    const {city, country, summary} = req.body
+    console.log(req.params.id)
+  
+    const updateLocation = await Location.findByPk(parseInt(req.params.id));
+    updateLocation.update(req.body);
+    res.json(req.body);
   } catch (e) {
     res.json({
       message: e.message
@@ -62,7 +70,7 @@ app.put("/locations/:id", async (req, res) => {
 // DELETE LOCATIONS AND RELATED IMAGES
 app.delete("/locations/:id", async (req, res) => {
   try {
-    const location = await Game.findByPk(req.params.id);
+    const location = await Location.findByPk(req.params.id);
     location.destroy();
     res.json({
       message: `Deleted loction ${req.params.id}.`

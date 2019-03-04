@@ -3,7 +3,8 @@ const a = 's'
 const data = {
   locations: [
     {
-      name: "Basel",
+      city: "Basel",
+      country: "Switzerland",
       summary: "Swiss German Border",
       latitude: 88.8,
       longitude: 88.8,
