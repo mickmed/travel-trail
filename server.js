@@ -12,6 +12,7 @@ app.use('/', express.static('./build/'));
 
 //GET LOCATIONS
 app.get("/locations", async (req, res) => {
+    console.log('get')
     console.log(req.body)
   try {
     const location = await Location.findAll({ include: [Image] });
@@ -23,6 +24,7 @@ app.get("/locations", async (req, res) => {
 
 //GET LOCATION BY ID
 app.get("/locations/:id", async (req, res) => {
+    
   try {
     const location = await Location.findByPk(req.params.id, {
       include: [Image]
@@ -35,9 +37,9 @@ app.get("/locations/:id", async (req, res) => {
 
 //POST LOCATIONS WITH IMAGES
 app.post("/locations", async (req, res) => {
-    console.log(req.body)
+   console.log('post')
     const {city, country, summary, latitude, longitude, images } = req.body
-    
+    console.log(city)
   try {
     let location = await Location.create({city, country, summary, latitude, longitude});
     let locationImages = await Image.bulkCreate(images, { returning: true });
@@ -53,8 +55,10 @@ app.post("/locations", async (req, res) => {
 
 //UPDATE LOCATIONS
 app.put("/locations/:id", async (req, res) => {
+    
   try {
     const {city, country, summary} = req.body
+    console.log('put', city)
     console.log(req.params.id)
   
     const updateLocation = await Location.findByPk(parseInt(req.params.id));
