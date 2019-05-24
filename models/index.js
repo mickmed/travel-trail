@@ -1,10 +1,9 @@
 const Sequelize = require('sequelize')
 
-const db = new Sequelize({
-	database: 'my_travels_db', 
+const db = new Sequelize('my_travels_db', 'postgres', 'postgres',{
+ 
 	dialect: 'postgres', 
-	logging: false,
-	operatorsAliases: false	
+
 })
 
 const Op = Sequelize.Op
