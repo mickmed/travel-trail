@@ -1,5 +1,7 @@
 const express = require("express");
-const app = express();
+const app = express()
+const http = require("http")
+
 const cors = require("cors");
 const body = require("body-parser");
 const { Location, Image } = require("./models");
@@ -9,6 +11,11 @@ app.use(cors());
 app.use(body.json({ limit: '1000000000000000mb' }));
 app.use('/', express.static('./build/'));
 
+
+var http = require("http");
+setInterval(function() {
+    http.get("http://my-travelogue.herokuapp.com");
+}, 3600 * 1000); 
 
 //GET LOCATIONS
 app.get("/locations", async (req, res) => {
