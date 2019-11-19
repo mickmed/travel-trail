@@ -42,6 +42,8 @@ app.post("/locations", async (req, res) => {
    
   try {
     let location = await Location.create({city, country, summary, latitude, longitude});
+
+    
     let locationImages = await Image.bulkCreate(images, { returning: true });
     await location.setImages(locationImages);
 
