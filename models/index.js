@@ -1,32 +1,37 @@
-const Sequelize = require('sequelize')
+'use strict';
 
-const db = new Sequelize('my_travels_db', 'postgres', 'postgres',{
- 
-	dialect: 'postgres', 
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
+const db = {};
 
-})
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
-const Op = Sequelize.Op
+fs
+  .readdirSync(__dirname)
+  .filter(file => {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    db[model.name] = model;
+  });
 
-const Location = db.define('location', {
-	city: Sequelize.STRING,
-	country: Sequelize.STRING,
-	summary: Sequelize.TEXT,
-	latitude: Sequelize.FLOAT,
-	longitude: Sequelize.FLOAT
-})
-
-const Image = db.define("image", {
-  name: Sequelize.STRING,
-  imageBase64: Sequelize.TEXT
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
 });
 
-Location.hasMany(Image, { onDelete: "cascade" });
-Image.belongsTo(Location);
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
-db.sync()
-module.exports = {
-  db,
-  Location,
-  Image
-};
+module.exports = db;
