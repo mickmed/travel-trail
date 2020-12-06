@@ -1,0 +1,145 @@
+.uploader {
+  width: 90%;
+  padding: 2%;
+  margin: 3% auto;
+}
+.fields {
+  max-height:20%;
+}
+
+
+
+.field {
+  /* width:100%; */
+  padding: .25em 0;
+  /* height:.5em */
+}
+
+.addLocationForm input,
+.addLocationForm textarea
+ {
+  width: 100%;
+  border: 1px solid lightblue;
+  border-radius: 8px;
+  padding-left:1em;
+  
+  /* padding:.5% 1% ; */
+}
+
+
+.addLocationForm input[type="text"] {
+  height: 2em;
+}
+
+.addLocationForm textarea {
+  padding-top: 1em;
+  height: 6em;
+  font-family: "Archivo", sans-serif;
+}
+
+.dropzoneWrapper {
+   max-width:95%;
+}
+.dropzone{
+  max-width:100%;
+}
+.dropzone-and-button{
+  display: flex;
+  flex-direction: row;
+  align-items:flex-end;
+  justify-content:space-between;
+  height:10%;
+  font-size:.8em;
+}
+
+.addLocationForm .dropzone,
+.addLocationForm button {
+  background-color: white;
+  
+}
+
+.addLocationForm .dropzone {
+  width: 60%;
+  height: 10%;
+  margin: 1em 0 0 0;
+  display:flex;
+  justify-content: center;
+  padding:1em;
+  /* align-items: center; */
+}
+
+.addLocationForm button {
+    padding:1em;
+    height:30%;
+    text-align:center;
+    border: 1px solid lightblue;
+  border-radius: 8px;
+ 
+}
+.button{
+  
+}
+
+.imagePreview{
+    display:flex;
+    height:8%;
+    max-height:20%;
+    margin:2% 0;
+    flex-wrap:wrap;
+   
+}
+
+.img-wrapper{
+  height:100%;
+  position:relative;
+  margin:0 .5%;
+  
+}
+
+.img-wrapper img{
+  height: 3em;
+}
+.fa-times-circle{
+  position:absolute;
+  top:0;
+  right:0;
+  font-size:20px;
+  color:red;
+  border:1px solid black;
+  
+}
+
+@media only screen and (min-width: 900px) {
+  .img-wrapper img{
+    height: 7em;
+  }
+}
+
+
+@media only screen and (max-height: 400px) {
+  .addLocationForm input[type="text"] {
+     height: 2em;
+  }
+
+  .addLocationForm input[type="text"] {
+    height: 1em;
+  }
+  .addLocationForm textarea {
+    padding-top: .5em;
+    height: 1em;
+    
+  }
+  .addLocationForm .dropzone {
+  
+    height: 10%;
+ 
+  }
+  
+  .addLocationForm button {
+      
+      height:20%;
+     
+   
+  }
+
+}

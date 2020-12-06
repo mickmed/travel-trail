@@ -1,0 +1,13 @@
+
+
+  .sliderImage img{
+    padding-top:1%;
+    max-width:96%;
+    height: auto;
+    margin: 0 auto;
+  }
+  .sliderImage{
+    width:96%;
+    height:auto;
+  }
+  

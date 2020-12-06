@@ -1,0 +1,14 @@
+
+
+.App{
+    height:100vh;
+    max-width:1200px;
+    background-image: linear-gradient(lightyellow, rgb(176, 223, 255));
+    margin:0 auto;
+    
+
+}
+
+.AppMargin{
+    /* margin:2%; */
+}

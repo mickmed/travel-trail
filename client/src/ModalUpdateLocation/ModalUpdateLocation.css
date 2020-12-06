@@ -1,0 +1,50 @@
+.modalUpdate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  font-family: 'Archivo', sans-serif;
+}
+
+.updateModal {
+  position:fixed; 
+ 
+  background-image: linear-gradient( rgb(250, 248, 248), rgb(212, 212, 212));
+  width: 90%;
+  height: 90%;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+
+.updateModal p{
+  margin:1% 2%;
+
+}
+/* .displayBlockUpdate {
+  display: block;
+} */
+
+.displayNoneUpdate {
+  display: none;
+}
+
+.toprowUpdate{
+  display:flex;
+  justify-content: space-between;
+  padding:0 1em;
+}
+
+.close-button{
+  position:absolute;
+  top:1%;
+  right:1%;
+}
+
+.deleteForm button{
+  position:absolute;
+  right:2%;
+  bottom:2%;
+}

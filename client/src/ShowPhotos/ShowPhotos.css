@@ -1,0 +1,14 @@
+  
+  .toprowShowPhotos {
+    display:flex;
+    justify-content: space-between;
+    padding:0 1em;
+  }
+
+  .show-photos button{
+      display:flex;
+      justify-content: center;
+      
+  }
+
+  

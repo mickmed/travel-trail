@@ -1,0 +1,29 @@
+.modalAddLocation {
+    
+    width:100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    font-family: 'Archivo', sans-serif;
+  }
+  
+  .modalMainAddLocation {
+    /* position:fixed;  */
+   
+    background-image: linear-gradient( rgb(250, 248, 248), rgb(212, 212, 212));
+    width: 100%;
+    height: 100%;
+   
+  }
+  
+ .title{
+   font-size:1em;
+ }
+  
+ 
+
+  .toprowAddLocation{
+    display:flex;
+    justify-content: space-between;
+    padding:0 1em;
+    max-height:5%;
+  }
