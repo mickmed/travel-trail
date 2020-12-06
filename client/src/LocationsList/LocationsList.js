@@ -143,13 +143,13 @@ class LocationsList extends Component {
           </div>
           <span className="stubborn">{location.country}</span>
         </div>
-        <img
+        {/* <img
           src={
             location.images[0].imageBase64 &&
             location.images[0].imageBase64
           }
           alt={location.images[0].name}
-        />
+        /> */}
 
       </div>
 

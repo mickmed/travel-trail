@@ -26,7 +26,7 @@ class Home extends Component {
   getLocations = async (req, res) => {
 
     try {
-      const fetchLocations = await Axios("https://my-travelogue.herokuapp.com/locations/");
+      const fetchLocations = await Axios("http://localhost:3000/api/locations/");
       // console.log(fetchLocations)
       const locations = fetchLocations.data;
       this.setState({
@@ -34,13 +34,13 @@ class Home extends Component {
         loading: true,
         clickedLocation: null
       });
-      console.log(locations)
+      // console.log(locations)
     } catch (err) {
       console.log(err);
     }
 
-   
-    
+
+
   };
 
   getClickedLocation = (location) => {
@@ -50,11 +50,14 @@ class Home extends Component {
   }
 
   componentDidMount = async () => {
-    console.log('home cdm')
+    // console.log('home cdm')
     await this.getLocations();
   };
 
-
+  getMapClickLatLong = (lat, long) => {
+    console.log(lat, long)
+    this.setState({lat:lat, long:long})
+  }
 
 
   render() {
@@ -65,9 +68,9 @@ class Home extends Component {
     const locationsList =
 
       <LocationsList
-        key={this.state.locations} 
-        locations={this.state.locations} 
-        renderFavsStatus={this.props.renderFavsStatus} 
+        key={this.state.locations}
+        locations={this.state.locations}
+        renderFavsStatus={this.props.renderFavsStatus}
         renderDateStatus={this.props.renderDateStatus}
         getLocations={this.getLocations}
         clickedLocation={this.getClickedLocation} />
@@ -82,15 +85,7 @@ class Home extends Component {
           <div className="homeComponent">
 
 
-            <div className="mapWrapper">
-              <Map
-                className="map"
-                key={this.state.locations}
-                locations={this.state.locations}
-                getLocations={this.getLocations}
-                clickedLocation={this.state.clickedLocation}
-              />
-            </div>
+
 
 
             <Route path={`${this.props.match.path}/update_location`} render={(props) => <div className="locationsListWrapper">{<LocationUpdate {...props} getLocations={this.getLocations} />}</div>} />
@@ -104,6 +99,17 @@ class Home extends Component {
               exact
               path={this.props.match.path}
               render={() => <div className="locationsListWrapper">{locationsList}</div>} />
+
+            <div className="mapWrapper">
+              <Map
+               
+                className="map"
+                key={this.state.locations}
+                locations={this.state.locations}
+                getLocations={this.getLocations}
+                clickedLocation={this.state.clickedLocation}
+              />
+            </div>
           </div>
         )}
       </div>

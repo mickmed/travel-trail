@@ -25,11 +25,12 @@ class Uploader extends Component {
     };
   }
 
-  // componentDidMount(){
-  //   this.setState({
-  //     latitude:this.props.latitude
-  //   })
-  // }
+  componentDidMount(){
+    console.log(this.props)
+    this.setState({
+      latitude:this.props.latitude
+    })
+  }
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value

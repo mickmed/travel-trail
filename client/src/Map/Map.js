@@ -1,5 +1,6 @@
 import React from "react";
 import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
+// import { history } from 'react-router-dom'
 import MapPin from "./MapPin";
 import LocationInfo from "./LocationInfo.js";
 import ShowPhotos from "../ShowPhotos/ShowPhotos";
@@ -71,7 +72,7 @@ class Map extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     // console.log(nextProps.clickedLocation && nextProps.clickedLocation.latitude, prevState.viewport.latitude)
-    // console.log(nextProps, prevState)
+    console.log(nextProps, prevState)
     if (nextProps.clickedLocation && nextProps.clickedLocation.latitude !== prevState.viewport.latitude) {
       return ({
         viewport: {
@@ -81,14 +82,22 @@ class Map extends React.Component {
         }
       })
     }
+    // return ({
+    //   viewport: {
+    //     ...prevState.viewport,
+    //     pinLat: prevState.viewport.pinLat,
+    //     pinLong: prevState.viewport.pinLong
+    //   }
+    // })
+    //  return ({pinLong:prevState.viewport.pinLong, pinLat:prevState.viewport.pinLat})
     // console.log(nextProps, prevState)
     // if(nextProps.clickedLocation && nextProps.clickedLocation.id !== prevState.location.id){
     //   console.log('here')
     // }
   }
-  handleClose=()=>{
+  handleClose = () => {
     this.setState({
-      showpics:false
+      showpics: false
     })
   }
   // handleStyleLoad = map => (map.resize())
@@ -97,9 +106,12 @@ class Map extends React.Component {
     this.setState({ pinLong: parseFloat(map.lngLat[0]) });
     this.setState({ pinLat: parseFloat(map.lngLat[1]) });
     this.setState({ renderLocationAdd: true });
-    this.setState({ redirect: true })
+    this.setState({ render: true })
+    
   }
-
+  openForm = () => {
+    this.props.history.push('/home/addLocation')
+  }
   _onClickPin = location => {
     console.log(location)
     this.setState({ showpics: true });
@@ -153,7 +165,7 @@ class Map extends React.Component {
     );
   }
 
-  
+
   _onViewportChange = (viewport) => {
     this.setState({
       viewport: { ...this.state.viewport, ...viewport }
@@ -190,14 +202,14 @@ class Map extends React.Component {
       <Redirect to={{
         pathname: "/home/update_location",
         locationInfo: this.state.locationInfo,
-        handleClose:this.handleClose
-               
+        handleClose: this.handleClose
+
       }} />
-      // console.log(this.state.loc)
+    // console.log(this.state.loc)
 
     return (
       <div className="map-wrap">
-        {redirect}
+        {/* {redirect} */}
         <ReactMapGL className="mapb"
           {...this.state.viewport}
           mapboxApiAccessToken={MAPBOX_TOKEN}
@@ -221,7 +233,7 @@ class Map extends React.Component {
           </div>
         </ReactMapGL>
         {showpics}
-      
+
 
       </div>
     );

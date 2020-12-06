@@ -1,0 +1,40 @@
+header {
+    border: 2px solid lightgreen;
+    border-radius: 10px;
+    background: white;
+    padding: 0 2%;
+    height: 8%;
+    color: lightgreen;
+    font-family: "Archivo";
+    font-size: 1.7em;
+    margin-top: 1%;
+    nav {
+        display: flex;
+        // margin-top:15%;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        a {
+            text-decoration: none;
+            color: green;
+            flex:3;
+        }
+        .header_icons {
+            box-sizing: border-box;
+            max-height: 100%;
+            font-size: 1em;
+            flex:1;
+            justify-content: flex-end;
+            align-items:flex-start;
+            display:flex;
+            a{
+                padding:1%;
+            }
+
+            .info {
+                margin-left: 0.25em;
+                // padding: 2%;
+            }
+        }
+    }
+}
