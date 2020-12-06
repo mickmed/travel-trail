@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
           onDelete: 'CASCADE'
         })
       
-      return Task;
+      return Image
     }
   };
   Image.init({
