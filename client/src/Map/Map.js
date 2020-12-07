@@ -40,7 +40,6 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('cdm')
     const AppDims = document.querySelector(".App")
     if (AppDims.offsetWidth < 900 && AppDims.offsetWidth < AppDims.offsetHeight) {
       this.setState({
@@ -72,7 +71,7 @@ class Map extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     // console.log(nextProps.clickedLocation && nextProps.clickedLocation.latitude, prevState.viewport.latitude)
-    console.log(nextProps, prevState)
+    // console.log(nextProps, prevState)
     if (nextProps.clickedLocation && nextProps.clickedLocation.latitude !== prevState.viewport.latitude) {
       return ({
         viewport: {
@@ -106,14 +105,14 @@ class Map extends React.Component {
     this.setState({ pinLong: parseFloat(map.lngLat[0]) });
     this.setState({ pinLat: parseFloat(map.lngLat[1]) });
     this.setState({ renderLocationAdd: true });
-    this.setState({ render: true })
+   
+    this.props.getMapClickLatLong(map.lngLat[1],map.lngLat[0])
     
   }
   openForm = () => {
     this.props.history.push('/home/addLocation')
   }
   _onClickPin = location => {
-    console.log(location)
     this.setState({ showpics: true });
     this.setState({ locationInfo: location });
   };
@@ -177,7 +176,6 @@ class Map extends React.Component {
 
   _resize = () => {
     const AppDims = document.querySelector(".mapWrapper")
-    // console.log(AppDims.offsetWidth)
     this._onViewportChange({
       width: AppDims.offsetWidth,
       height: AppDims.offsetHeight - AppDims.offsetHeight / 10
@@ -188,15 +186,7 @@ class Map extends React.Component {
     const locations = this.props.locations;
     let { viewport } = this.state
     let locationAdd = this.state.renderLocationAdd
-    let redirect = this.state.redirect && <Redirect to={{
-      pathname: '/home/add_location',
-      linkProps: {
-        long: this.state.pinLong,
-        lat: this.state.pinLat,
-        getLocations: this.props.getLocations,
-        renderLocationAdd: this.state.renderLocationAdd
-      }
-    }} />
+ 
 
     let showpics = this.state.showpics &&
       <Redirect to={{
@@ -205,11 +195,9 @@ class Map extends React.Component {
         handleClose: this.handleClose
 
       }} />
-    // console.log(this.state.loc)
 
     return (
       <div className="map-wrap">
-        {/* {redirect} */}
         <ReactMapGL className="mapb"
           {...this.state.viewport}
           mapboxApiAccessToken={MAPBOX_TOKEN}

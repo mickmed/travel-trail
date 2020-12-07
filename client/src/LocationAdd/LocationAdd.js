@@ -2,25 +2,33 @@ import React, { Component } from "react";
 import "./LocationAdd.css";
 import Uploader from "../Uploader/Uploader";
 import { Link, Redirect } from "react-router-dom"
-import geolocationUrl from '../Services/Geolocation'
-import Axios from 'axios'
+
 
 class LocationAdd extends Component {
 
   state = {
+    lat: 0,
+    long: 0,
+    data: null
 
   }
   async componentDidMount() {
-   console.log(geolocationUrl)
-    const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=51.952659%2C7.632473&pretty=1`)
-    // this.props.location.linkProps.long !== undefined &&
-    // console.log(await api.get())
+    //  console.log(geolocationUrl, this.props)
+    this.setState({ lat: this.props.lat, long: this.props.long })
 
-    
-console.log(resp.data.results[0])
+
   }
-  static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps, prevState)
+
+
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.state.data, prevState.data !== null && prevState.data.results)
+    if (prevProps.lat !== prevState.lat) {
+      this.setState({ lat: prevProps.lat, long: prevProps.long })
+
+
+    }
+
   }
 
   render() {
@@ -28,8 +36,8 @@ console.log(resp.data.results[0])
     // this.state.linkProps
 
     let redct = this.props.location.linkProps === undefined && <Redirect to={'./locations'} />
-    console.log('locAdd-state', this.state)
-    // console.log(this.props.location.linkProps)
+    // console.log('locAdd-state', this.state)
+    console.log(this.state)
     // 
     return (
       <div className={"modalAddLocation"}>
@@ -53,7 +61,7 @@ console.log(resp.data.results[0])
           }  */}
 
           {true ?
-            <Uploader long={this.props.location.linkProps} /> :
+            <Uploader location={this.state} long={this.state.long} lat={this.state.lat}/> :
             <p>Click a location on the map</p>
 
 

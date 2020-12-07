@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import "./Home.css";
-import { Route, Link } from "react-router-dom"
+import { Route, Link, Redirect } from "react-router-dom"
 import Map from "../Map/Map";
 import LocationsList from "../LocationsList/LocationsList";
 import Info from "../Info/Info"
@@ -27,14 +27,13 @@ class Home extends Component {
 
     try {
       const fetchLocations = await Axios("http://localhost:3000/api/locations/");
-      // console.log(fetchLocations)
       const locations = fetchLocations.data;
       this.setState({
         locations: locations,
         loading: true,
-        clickedLocation: null
+        clickedLocation: null,
+        redirect: false
       });
-      // console.log(locations)
     } catch (err) {
       console.log(err);
     }
@@ -45,24 +44,22 @@ class Home extends Component {
 
   getClickedLocation = (location) => {
 
-    console.log(location)
     this.setState({ clickedLocation: location })
   }
 
   componentDidMount = async () => {
-    // console.log('home cdm')
     await this.getLocations();
   };
 
   getMapClickLatLong = (lat, long) => {
     console.log(lat, long)
-    this.setState({lat:lat, long:long})
+    this.setState({ lat: lat, long: long })
+    this.setState({ redirect: true })
   }
 
 
   render() {
-    //  console.log('home', this.state.locations)
-    const { images } = this.state;
+    const { images, lat, long } = this.state;
     const hasImages = images.length > 0;
 
     const locationsList =
@@ -75,8 +72,15 @@ class Home extends Component {
         getLocations={this.getLocations}
         clickedLocation={this.getClickedLocation} />
 
-    // console.log(this.props)
-
+    let redirect = this.state.redirect && <Redirect to={{
+      pathname: '/home/add_location',
+      linkProps: {
+        // long: this.state.pinLong,
+        // lat: this.state.pinLat,
+        // getLocations: this.props.getLocations,
+        // renderLocationAdd: this.state.renderLocationAdd
+      }
+    }} />
     return (
       <div>
 
@@ -85,12 +89,12 @@ class Home extends Component {
           <div className="homeComponent">
 
 
-
+            {redirect}
 
 
             <Route path={`${this.props.match.path}/update_location`} render={(props) => <div className="locationsListWrapper">{<LocationUpdate {...props} getLocations={this.getLocations} />}</div>} />
 
-            <Route path={`${this.props.match.path}/add_location`} render={(props) => <div className="locationsListWrapper">{<LocationAdd {...props} />}</div>} />
+            <Route path={`${this.props.match.path}/add_location`} render={(props) => <div className="locationsListWrapper">{<LocationAdd {...props} lat={lat} long={long} />}</div>} />
 
             <Route path={`${this.props.match.path}/locations`} render={() => <div className="locationsListWrapper">{locationsList}</div>} />
 
@@ -102,12 +106,13 @@ class Home extends Component {
 
             <div className="mapWrapper">
               <Map
-               
+
                 className="map"
                 key={this.state.locations}
                 locations={this.state.locations}
                 getLocations={this.getLocations}
                 clickedLocation={this.state.clickedLocation}
+                getMapClickLatLong={this.getMapClickLatLong}
               />
             </div>
           </div>
@@ -118,7 +123,6 @@ class Home extends Component {
 }
 
 function Topic({ match }) {
-  console.log('i')
   return <h3>Requested Param: {match.params.id}</h3>;
 }
 

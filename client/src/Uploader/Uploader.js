@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom'
 import Dropzone from "react-dropzone";
 import "./Uploader.css";
 import Axios from "axios";
+import geolocationUrl from '../Services/Geolocation'
+
 
 class Uploader extends Component {
   constructor(props) {
@@ -21,15 +23,34 @@ class Uploader extends Component {
       previewImages: [],
       submitted: false,
       redirect: false,
-      uploading:false
+      uploading:false,
+      lat:0,
+      long:0,
+      data:null
     };
   }
 
-  componentDidMount(){
-    console.log(this.props)
+  async componentDidMount(){
     this.setState({
       latitude:this.props.latitude
     })
+    try {
+      const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.lat.toFixed(6)}%2C${this.props.long.toFixed(6)}&pretty=1`)
+      this.setState({ data: resp.data.results })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  async componentDidUpdate(prevProps, prevState) {
+    // console.log(this.state.data, prevState.data !== null && prevState.data.results)
+    console.log(prevProps.lat)
+    if (prevProps.lat !== prevState.lat) {
+      this.setState({ lat: prevProps.lat, long: prevProps.long })
+
+      const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.lat.toFixed(6)}%2C${this.props.long.toFixed(6)}&pretty=1`)
+      this.setState({ data: resp.data.results })
+    }
+
   }
   handleChange = event => {
     this.setState({
@@ -38,7 +59,6 @@ class Uploader extends Component {
   };
 
   handleUpdate = async event => {
-    console.log('here')
     event.preventDefault();
     this.setState({ uploading: true })
 
@@ -78,11 +98,10 @@ class Uploader extends Component {
     event.preventDefault()
     this.setState({uploading:true})
     const { city, country, summary, latitude, longitude, images } = this.state
-    console.log('before condition')
-    console.log(city, country, summary, latitude, longitude, images)
+    // console.log('before condition')
+    // console.log(city, country, summary, latitude, longitude, images)
     if (city && country && summary && latitude && longitude && images) {
 
-      console.log('after condition')
       //sending data to server
       return (
         await Axios.post(
@@ -137,7 +156,7 @@ class Uploader extends Component {
 
     // this.setState({ previewImages: previewImages });
     accepted.forEach(file => {
-      console.log(file)
+      // console.log(file)
       const reader = new FileReader();
       reader.addEventListener("load", () => {
         this.setState(state => ({
@@ -207,8 +226,8 @@ class Uploader extends Component {
     const { images } = this.state;
     const hasImages = images.length > 0;
 
-    console.log('uploader props', this.props)
-    console.log('uploader State', this.state)
+    // console.log('uploader props', this.props)
+    // console.log('uploader State', this.state)
    
     const redirectToList = this.state.redirect && <Redirect to={'./locations'} />
     return (
