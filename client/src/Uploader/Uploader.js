@@ -36,7 +36,7 @@ class Uploader extends Component {
     })
     try {
       const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.lat.toFixed(6)}%2C${this.props.long.toFixed(6)}&pretty=1`)
-      this.setState({ data: resp.data.results })
+      this.setState({ data: resp.data.results[0] })
     } catch (err) {
       console.log(err)
     }
@@ -48,11 +48,12 @@ class Uploader extends Component {
       this.setState({ lat: prevProps.lat, long: prevProps.long })
 
       const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.lat.toFixed(6)}%2C${this.props.long.toFixed(6)}&pretty=1`)
-      this.setState({ data: resp.data.results })
+      this.setState({ data: resp.data.results[0], country: resp.data.results[0].components.country })
     }
 
   }
   handleChange = event => {
+    console.log(event.target.name, event.target.value)
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -251,7 +252,7 @@ class Uploader extends Component {
                 type="text"
                 placeholder={this.props.passer === 'modalUpdate' ? this.state.country : "Country"}
                 name="country"
-                value={this.state.country}
+                value={this.state.data && this.state.country}
                 onChange={this.handleChange}
               />
             </div>
