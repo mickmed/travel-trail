@@ -11,23 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-    
-        // associations can be defined here
-        Image.belongsTo(models.Location, {
-          foreignKey: 'locationId',
-          onDelete: 'CASCADE'
-        })
-      
+
+      // associations can be defined here
+
+
       return Image
     }
   };
+
+
   Image.init({
     name: DataTypes.STRING,
     imageBase64: DataTypes.TEXT,
-    locationId: DataTypes.INTEGER
+    LocationId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Image',
   });
+  Image.associate = function (models) {
+    Image.belongsTo(models.Location, {})
+  }
   return Image;
 };
