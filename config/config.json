@@ -17,7 +17,7 @@
     "username": "postgres",
     "password": "postgres",
     "database": "my_travels_production",
-    "host": "https://dashboard.heroku.com/apps/my-travelogue-server",
+    "host": "https://my-travelogue-server.herokuapp.com/",
     "dialect": "postgres"
   }
 }
