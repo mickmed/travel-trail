@@ -7,6 +7,7 @@ import LocationsList from "../LocationsList/LocationsList";
 import Info from "../Info/Info"
 import LocationAdd from "../LocationAdd/LocationAdd";
 import LocationUpdate from "../LocationUpdate/LocationUpdate";
+import api from '../Services/ApiHelper'
 
 
 // import { Redirect } from "react-router-dom";
@@ -26,7 +27,8 @@ class Home extends Component {
   getLocations = async (req, res) => {
 
     try {
-      const fetchLocations = await Axios("http://localhost:3000/api/locations/");
+     
+      const fetchLocations = await api.get("http://localhost:3000/api/locations/");
       const locations = fetchLocations.data;
       this.setState({
         locations: locations,
