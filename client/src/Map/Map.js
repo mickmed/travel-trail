@@ -1,14 +1,12 @@
+
 import React from "react";
 import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
-// import { history } from 'react-router-dom'
 import MapPin from "./MapPin";
 import LocationInfo from "./LocationInfo.js";
-import ShowPhotos from "../ShowPhotos/ShowPhotos";
 import "./Map.css"
-import { Redirect, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
-const MAPBOX_TOKEN =
-  "pk.eyJ1IjoibWlja21lZCIsImEiOiJjanFzdTVtZjEwMnY0NDJzM2g4MXNuNTM0In0.VDbqZxEh0hxXAixRjS9FzA";
+const MAPBOX_TOKEN = "pk.eyJ1IjoibWlja21lZCIsImEiOiJjanFzdTVtZjEwMnY0NDJzM2g4MXNuNTM0In0.VDbqZxEh0hxXAixRjS9FzA";
 
 const navStyle = {
   position: "absolute",
@@ -104,17 +102,23 @@ class Map extends React.Component {
     console.log(map.lngLat)
     this.setState({ pinLong: parseFloat(map.lngLat[0]) });
     this.setState({ pinLat: parseFloat(map.lngLat[1]) });
-    this.setState({ renderLocationAdd: true });
+    // this.setState({ renderLocationAdd: true });
+    this.props.history.push({
+        pathname:'/add_location',
+        latitude:map.lngLat[1],
+        longitude:map.lngLat[0]
+    })
+
+
    
-    this.props.getMapClickLatLong(map.lngLat[1],map.lngLat[0])
     
   }
-  openForm = () => {
-    this.props.history.push('/home/addLocation')
-  }
+
   _onClickPin = location => {
-    this.setState({ showpics: true });
-    this.setState({ locationInfo: location });
+    this.props.history.push({
+        pathname:'/update_location',
+        location
+    })
   };
 
   _renderMarker = (location, index) => {
@@ -187,15 +191,6 @@ class Map extends React.Component {
     let { viewport } = this.state
     let locationAdd = this.state.renderLocationAdd
  
-
-    let showpics = this.state.showpics &&
-      <Redirect to={{
-        pathname: "/home/update_location",
-        locationInfo: this.state.locationInfo,
-        handleClose: this.handleClose
-
-      }} />
-
     return (
       <div className="map-wrap">
         <ReactMapGL className="mapb"
@@ -220,7 +215,6 @@ class Map extends React.Component {
             <NavigationControl className="navigation" onViewportChange={this._updateViewport} />
           </div>
         </ReactMapGL>
-        {showpics}
 
 
       </div>
@@ -228,4 +222,4 @@ class Map extends React.Component {
   }
 }
 
-export default Map;
+export default withRouter(Map);

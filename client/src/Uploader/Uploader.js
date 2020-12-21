@@ -1,59 +1,51 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import Dropzone from "react-dropzone";
 import "./Uploader.css";
 import Axios from "axios";
 import geolocationUrl from '../Services/Geolocation'
+import api from '../Services/ApiHelper'
 
 
 class Uploader extends Component {
   constructor(props) {
     super(props);
+
+    const { id, city, country, summary, latitude, longitude } = this.props.location.location || this.props.location
+
     this.state = {
       uploading: false,
-      location: this.props.location,
-      id: this.props.location && this.props.location.id,
-      city: this.props.location && this.props.location.city,
-      country: this.props.location && this.props.location.country,
-      summary: this.props.location && this.props.location.summary,
-      latitude: this.props.lat,
-      longitude: this.props.long,
       images: this.props.location && this.props.location.images || [],
       images_new: [],
       previewImages: [],
       submitted: false,
       redirect: false,
-      uploading:false,
-      lat:0,
-      long:0,
-      data:null
+      uploading: false,
+      id, 
+      data: null,
+      city,
+      country,
+      summary,
+      latitude,
+      longitude,
+
     };
   }
 
-  async componentDidMount(){
-    this.setState({
-      latitude:this.props.latitude
-    })
-    try {
-      const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.lat.toFixed(6)}%2C${this.props.long.toFixed(6)}&pretty=1`)
-      this.setState({ data: resp.data.results[0] })
-    } catch (err) {
-      console.log(err)
+  async componentDidMount() {
+    if (this.props.location.lat) {
+      try {
+        const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.lat.toFixed(6)}%2C${this.props.location.long.toFixed(6)}&pretty=1`)
+        this.setState({
+          country: resp.data.results[0].components.country,
+        })
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
-  async componentDidUpdate(prevProps, prevState) {
-    // console.log(this.state.data, prevState.data !== null && prevState.data.results)
-    console.log(prevProps.lat)
-    if (prevProps.lat !== prevState.lat) {
-      this.setState({ lat: prevProps.lat, long: prevProps.long })
 
-      const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.lat.toFixed(6)}%2C${this.props.long.toFixed(6)}&pretty=1`)
-      this.setState({ data: resp.data.results[0], country: resp.data.results[0].components.country })
-    }
-
-  }
   handleChange = event => {
-    console.log(event.target.name, event.target.value)
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -62,14 +54,15 @@ class Uploader extends Component {
   handleUpdate = async event => {
     event.preventDefault();
     this.setState({ uploading: true })
+    const { city, country, summary } = this.state
 
     return (
-      await Axios.put(
-        "https://my-travelogue.herokuapp.com/locations/" + this.state.location.id,
+      await api.put(
+        "/locations/" + this.state.id,
         {
-          city: this.state.city,
-          country: this.state.country,
-          summary: this.state.summary,
+          city,
+          country,
+          summary,
           latitude: this.props.lat,
           longitude: this.props.long,
           images: this.state.images_new
@@ -81,15 +74,15 @@ class Uploader extends Component {
           }
         }
       )
-      .then((res) => this.props.getLocations()
-      )
-      .then((res) => {
-        this.setState({
-          uploading:false,
-          redirect: true
+        .then((res) => this.props.getLocations()
+        )
+        .then((res) => {
+          this.setState({
+            uploading: false,
+            redirect: true
+          })
+          return res
         })
-        return res
-      })
 
     );
   }
@@ -97,22 +90,20 @@ class Uploader extends Component {
 
   handleSubmit = async event => {
     event.preventDefault()
-    this.setState({uploading:true})
-    const { city, country, summary, latitude, longitude, images } = this.state
-    // console.log('before condition')
-    // console.log(city, country, summary, latitude, longitude, images)
-    if (city && country && summary && latitude && longitude && images) {
+    this.setState({ uploading: true })
+    const { city, country, summary, lat, long, images } = this.state
 
+    if (city && country && summary && lat && long && images) {
       //sending data to server
       return (
-        await Axios.post(
-          "https://my-travelogue.herokuapp.com/locations",
+        await api.post(
+          "/locations",
           {
-            city: this.state.city,
-            country: this.state.country,
-            summary: this.state.summary,
-            latitude: this.props.lat,
-            longitude: this.props.long,
+            city,
+            country,
+            summary,
+            latitude: lat,
+            longitude: long,
             images: this.state.images
           },
 
@@ -122,11 +113,11 @@ class Uploader extends Component {
             }
           }
         )
-          .then((res) => this.props.getLocations()
-          )
+          // .then((res) => this.props.getLocations()
+          // )
           .then((res) => {
             this.setState({
-              uploading:false,
+              uploading: false,
               redirect: true
             })
             return res
@@ -147,7 +138,7 @@ class Uploader extends Component {
   // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
   //accepted - array of imgs
   onDrop = accepted => {
-
+    console.log(accepted)
     // let previewImages = [];
     // previewImages.push(this.state.images)
 
@@ -227,13 +218,16 @@ class Uploader extends Component {
     const { images } = this.state;
     const hasImages = images.length > 0;
 
+
     // console.log('uploader props', this.props)
     // console.log('uploader State', this.state)
-   
-    const redirectToList = this.state.redirect && <Redirect to={'./locations'} />
+
+    // const redirect = this.state.redirect && <Redirect to={'./locations'} />
+    const { locationInfo } = this.props.location
+    console.log(locationInfo)
     return (
       <div className="uploader">
-        {redirectToList}
+        {/* {redirectToList} */}
         <form className="addLocationForm" onSubmit={this.props.update === true ? this.handleUpdate : this.handleSubmit}>
           <div className="fields">
             <div className="field">
@@ -242,7 +236,7 @@ class Uploader extends Component {
                 type="text"
                 placeholder={this.props.passer === 'modalUpdate' ? this.state.city : 'city'}
                 name="city"
-                value={this.state.city}
+                value={'' || this.state.city}
                 onChange={this.handleChange}
               />
             </div>
@@ -252,7 +246,7 @@ class Uploader extends Component {
                 type="text"
                 placeholder={this.props.passer === 'modalUpdate' ? this.state.country : "Country"}
                 name="country"
-                value={this.state.data && this.state.country}
+                value={this.state.country}
                 onChange={this.handleChange}
               />
             </div>
@@ -271,7 +265,7 @@ class Uploader extends Component {
             <div className="dropzone-and-button">
               <Dropzone
                 maxSize={2000000}
-                accept="image/jpeg, image/png"
+                accept="image/jpeg, image/png, image/jpg"
                 onDrop={this.onDrop}
               >
                 {({ getRootProps, getInputProps, isDragActive }) => {
@@ -310,4 +304,4 @@ class Uploader extends Component {
   }
 }
 
-export default Uploader;
+export default withRouter(Uploader);

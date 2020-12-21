@@ -18,6 +18,7 @@ const getLocations = async (req, res) => {
 }
 
 const createLocation = async (req, res) => {
+    
     try {
         const newLocation = await Location.create(req.body)
         console.log(newLocation)
