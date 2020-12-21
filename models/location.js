@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     longitude: DataTypes.FLOAT,
   }, {})
   Location.associate = function(models){
-    Location.hasMany(models.Image, {as:'images'})
+    Location.hasMany(models.Image, {})
   }
   return Location;
 };

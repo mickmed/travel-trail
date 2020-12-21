@@ -11,11 +11,10 @@ class Uploader extends Component {
   constructor(props) {
     super(props);
 
-    const { id, city, country, summary, latitude, longitude } = this.props.location.location || this.props.location
-
+    const { id, city, country, summary, latitude, longitude, Images } = this.props.location.location || this.props.location
     this.state = {
       uploading: false,
-      images: this.props.location && this.props.location.images || [],
+      images:Images || [],
       images_new: [],
       previewImages: [],
       submitted: false,
@@ -33,9 +32,9 @@ class Uploader extends Component {
   }
 
   async componentDidMount() {
-    if (this.props.location.lat) {
+    if (this.props.location.latitude) {
       try {
-        const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.lat.toFixed(6)}%2C${this.props.location.long.toFixed(6)}&pretty=1`)
+        const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.latitude.toFixed(6)}%2C${this.props.location.longitude.toFixed(6)}&pretty=1`)
         this.setState({
           country: resp.data.results[0].components.country,
         })
@@ -54,18 +53,18 @@ class Uploader extends Component {
   handleUpdate = async event => {
     event.preventDefault();
     this.setState({ uploading: true })
-    const { city, country, summary } = this.state
+    const { id, city, country, summary, latitude, longitude, images } = this.state
 
     return (
       await api.put(
-        "/locations/" + this.state.id,
+        "/locations/" + id,
         {
           city,
           country,
           summary,
-          latitude: this.props.lat,
-          longitude: this.props.long,
-          images: this.state.images_new
+          latitude,
+          longitude,
+          images
         },
 
         {
@@ -91,10 +90,8 @@ class Uploader extends Component {
   handleSubmit = async event => {
     event.preventDefault()
     this.setState({ uploading: true })
-    const { city, country, summary, lat, long, images } = this.state
-
-    if (city && country && summary && lat && long && images) {
-      //sending data to server
+    const { city, country, summary, latitude, longitude, images } = this.state
+    if (city && country && summary && latitude && longitude && images) {
       return (
         await api.post(
           "/locations",
@@ -102,9 +99,9 @@ class Uploader extends Component {
             city,
             country,
             summary,
-            latitude: lat,
-            longitude: long,
-            images: this.state.images
+            latitude,
+            longitude,
+            images
           },
 
           {
@@ -124,10 +121,6 @@ class Uploader extends Component {
           })
 
           .then((res) => console.log('res', res))
-
-
-
-
       )
     }
   }
@@ -148,7 +141,7 @@ class Uploader extends Component {
 
     // this.setState({ previewImages: previewImages });
     accepted.forEach(file => {
-      // console.log(file)
+      console.log(file)
       const reader = new FileReader();
       reader.addEventListener("load", () => {
         this.setState(state => ({
@@ -216,15 +209,10 @@ class Uploader extends Component {
 
   render() {
     const { images } = this.state;
+    console.log(images)
     const hasImages = images.length > 0;
 
 
-    // console.log('uploader props', this.props)
-    // console.log('uploader State', this.state)
-
-    // const redirect = this.state.redirect && <Redirect to={'./locations'} />
-    const { locationInfo } = this.props.location
-    console.log(locationInfo)
     return (
       <div className="uploader">
         {/* {redirectToList} */}
@@ -288,6 +276,7 @@ class Uploader extends Component {
             </div>
             {hasImages && (
               <div className="imagePreview">
+                {console.log(images)}
                 {images.map((image, index) => (
                   <div className="img-wrapper">
 

@@ -9,8 +9,9 @@ const PORT = process.env.PORT || 3000
 const app = express()
 
 app.use(cors())
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '10000000mb'}))
 app.use(logger('dev'))
+app.use(express.json());
 
 app.use('/api', locationsRoutes)
 
