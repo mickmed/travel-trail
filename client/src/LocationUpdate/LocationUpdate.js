@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom'
-import axios from 'axios';
+import { Link, Redirect, withRouter } from 'react-router-dom'
 import './LocationUpdate.css'
 import Uploader from '../Uploader/Uploader.js'
+import api from '../Services/ApiHelper'
 
 class LocationUpdate extends Component {
   constructor(props) {
     super(props);
     this.state = {
       updated: false,
-      redirect:false,
-      deleting:false,
+      redirect: false,
+      deleting: false,
       // linkProps: this.props && this.props.location.locationInfo
 
     };
@@ -55,28 +55,15 @@ class LocationUpdate extends Component {
 
   deleteLocation = async event => {
     event.preventDefault();
-    console.log(event.target.value)
-    this.setState({
-      deleting:true
-    })
+
     try {
-      const deleteLocation = await axios.delete(
+    
+      api.delete("/locations/" + parseInt(event.target.value))
+      console.log('help me')
+      await this.props.getLocations()
+      this.props.history.push('/')
 
-        "https://my-travelogue.herokuapp.com/locations/" +
-          parseInt(event.target.value)
-      )
 
-      .then((res) => this.props.getLocations()
-      
-      )
-      .then((res) => {
-        
-        this.setState({
-          deleting: false,
-          redirect: true
-        })
-        return res
-      })
      
     } catch (err) {
       console.log(err);
@@ -84,8 +71,8 @@ class LocationUpdate extends Component {
 
   };
   render() {
-   
-    let redirectFromRefresh = !this.props.location.location && <Redirect to={'/'}/>
+
+    let redirectFromRefresh = !this.props.location.location && <Redirect to={'/'} />
     let uploader = this.state.deleting ? '' : <Uploader update={true} getLocations={this.props.getLocations} />
     return (
       <div className={"modalAddLocation"}>
@@ -93,14 +80,18 @@ class LocationUpdate extends Component {
           <div className="toprowAddLocation">
             <h1 className="title">Edit location</h1>
             {redirectFromRefresh}
-          
-          
-            <button className="deleteButton" onClick={(e)=>this.deleteLocation(e)} name="delete" value={this.props.locationInfo && this.props.location.locationInfo.id}>
-                {this.state.deleting ? '...deleting' : 'Delete'}
+
+
+            <button
+              className="deleteButton"
+              onClick={(e) => this.deleteLocation(e)}
+              name="delete"
+              value={this.props.location.location && this.props.location.location.id}>
+              {this.state.deleting ? '...deleting' : 'Delete'}
             </button>
-         
+
             <Link to="/">
-              <button onClick={this.props.location.handleClose}>
+              <button onClick={this.props.handleClose}>
                 close
               </button>
             </Link>
@@ -108,7 +99,7 @@ class LocationUpdate extends Component {
           </div>
 
           {uploader}
-          
+
 
         </section>
       </div>
@@ -116,6 +107,6 @@ class LocationUpdate extends Component {
   }
 }
 
-export default LocationUpdate;
+export default withRouter(LocationUpdate)
 
 

@@ -6,7 +6,6 @@ import Axios from "axios";
 import geolocationUrl from '../Services/Geolocation'
 import api from '../Services/ApiHelper'
 
-
 class Uploader extends Component {
   constructor(props) {
     super(props);
@@ -14,13 +13,13 @@ class Uploader extends Component {
     const { id, city, country, summary, latitude, longitude, Images } = this.props.location.location || this.props.location
     this.state = {
       uploading: false,
-      images:Images || [],
+      images: Images || [],
       images_new: [],
       previewImages: [],
       submitted: false,
       redirect: false,
       uploading: false,
-      id, 
+      id,
       data: null,
       city,
       country,
@@ -78,8 +77,9 @@ class Uploader extends Component {
         .then((res) => {
           this.setState({
             uploading: false,
-            redirect: true
+
           })
+          this.props.history.push('/')
           return res
         })
 
@@ -92,36 +92,36 @@ class Uploader extends Component {
     this.setState({ uploading: true })
     const { city, country, summary, latitude, longitude, images } = this.state
     if (city && country && summary && latitude && longitude && images) {
-      return (
-        await api.post(
-          "/locations",
-          {
-            city,
-            country,
-            summary,
-            latitude,
-            longitude,
-            images
-          },
 
-          {
-            headers: {
-              "Content-Type": "application/json"
-            }
+      const resp = await api.post(
+        "/locations",
+        {
+          city,
+          country,
+          summary,
+          latitude,
+          longitude,
+          images
+        },
+
+        {
+          headers: {
+            "Content-Type": "application/json"
           }
-        )
-          // .then((res) => this.props.getLocations()
-          // )
-          .then((res) => {
-            this.setState({
-              uploading: false,
-              redirect: true
-            })
-            return res
-          })
-
-          .then((res) => console.log('res', res))
+        }
       )
+      await this.props.getLocations()
+
+      this.setState({
+        uploading: false,
+
+      })
+      this.props.history.push('/')
+
+
+
+
+
     }
   }
 
@@ -177,7 +177,7 @@ class Uploader extends Component {
     let name = e.target.getAttribute('value')
 
     try {
-      const deleteImage = await Axios.delete('https://my-travelogue.herokuapp.com/images/' + id)
+      const deleteImage = await api.delete('https://my-travelogue.herokuapp.com/images/' + id)
 
       let images = this.state.images.filter((elem) => {
 

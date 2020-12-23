@@ -5,8 +5,8 @@ import { Link, Redirect } from "react-router-dom"
 
 class LocationAdd extends Component {
   state = {
-    lat: 0,
-    long: 0,
+    latitude: 0,
+    longitude: 0,
     data: null
 
   }
@@ -15,12 +15,13 @@ class LocationAdd extends Component {
     this.setState({ latitude: this.props.history.location.latitude, longitude: this.props.history.location.longitude })
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   // console.log(this.state.data, prevState.data !== null && prevState.data.results)
-  //   if (prevProps.lat !== prevState.lat) {
-  //     this.setState({ lat: prevProps.lat, long: prevProps.long })
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    // console.log(prevProps.location.latitude, prevState.location.longitude)
+
+    if (prevProps.latitude !== prevState.latitude) {
+      this.setState({ latitude: prevProps.latitude, longitude: prevProps.longitude })
+    }
+  }
 
   render() {
     let redirectFromRefresh = this.props.location.latitude === undefined && <Redirect to={'./'} />
@@ -40,7 +41,7 @@ class LocationAdd extends Component {
           </div>
 
           {true ?
-            <Uploader /> :
+            <Uploader getLocations={this.props.getLocations}/> :
             <p>Click a location on the map</p>
           }
         </section>

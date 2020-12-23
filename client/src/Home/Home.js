@@ -23,6 +23,7 @@ class Home extends Component {
   }
 
   componentDidMount = async () => {
+    console.log('home cdm')
     await this.getLocations();
   };
 
@@ -34,7 +35,7 @@ class Home extends Component {
         locations: locations,
         loading: true,
         clickedLocation: null,
-        redirect: false
+       
       });
     } catch (err) {
       console.log(err);
@@ -63,10 +64,9 @@ class Home extends Component {
           <div className="homeComponent">
 
             <Switch>
-              <Route path={`/add_location`} render={(props) => <div className="locationsListWrapper">{<LocationAdd {...props} />}</div>} />
+              <Route path={`/add_location`} render={(props) => <div className="locationsListWrapper">{<LocationAdd {...props} getLocations={this.getLocations}/>}</div>} />
               <Route path={`/update_location`} render={(props) => <div className="locationsListWrapper">{<LocationUpdate {...props} getLocations={this.getLocations} />}</div>} />
               <Route path={`${this.props.match.path}/info`} render={() => <div className="locationsListWrapper"> <Info /></div>} />
-
 
               <Route
                 path={'/'}

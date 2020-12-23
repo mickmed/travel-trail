@@ -100,8 +100,8 @@ class Map extends React.Component {
   // handleStyleLoad = map => (map.resize())
   _onClickMap = (map, evt) => {
     console.log(map.lngLat)
-    this.setState({ pinLong: parseFloat(map.lngLat[0]) });
     this.setState({ pinLat: parseFloat(map.lngLat[1]) });
+    this.setState({ pinLong: parseFloat(map.lngLat[0]) });
     // this.setState({ renderLocationAdd: true });
     this.props.history.push({
         pathname:'/add_location',
