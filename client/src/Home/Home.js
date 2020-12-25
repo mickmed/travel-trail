@@ -7,6 +7,8 @@ import LocationsList from "../LocationsList/LocationsList";
 import Info from "../Info/Info"
 import LocationAdd from "../LocationAdd/LocationAdd";
 import LocationUpdate from "../LocationUpdate/LocationUpdate";
+import LocationShow from "../LocationShow/LocationShow";
+
 import api from '../Services/ApiHelper'
 
 class Home extends Component {
@@ -35,7 +37,7 @@ class Home extends Component {
         locations: locations,
         loading: true,
         clickedLocation: null,
-       
+
       });
     } catch (err) {
       console.log(err);
@@ -64,9 +66,11 @@ class Home extends Component {
           <div className="homeComponent">
 
             <Switch>
-              <Route path={`/add_location`} render={(props) => <div className="locationsListWrapper">{<LocationAdd {...props} getLocations={this.getLocations}/>}</div>} />
+              <Route path={`/add_location`} render={(props) => <div className="locationsListWrapper">{<LocationAdd {...props} getLocations={this.getLocations} />}</div>} />
               <Route path={`/update_location`} render={(props) => <div className="locationsListWrapper">{<LocationUpdate {...props} getLocations={this.getLocations} />}</div>} />
-              <Route path={`${this.props.match.path}/info`} render={() => <div className="locationsListWrapper"> <Info /></div>} />
+
+              <Route path={`/show_location`} render={(props) => <div className="locationsListWrapper">{<LocationShow {...props} getLocations={this.getLocations} />}</div>} />
+              <Route path={`/info`} render={() => <div className="locationsListWrapper"> <Info /></div>} />
 
               <Route
                 path={'/'}

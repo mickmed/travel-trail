@@ -104,19 +104,26 @@ class LocationsList extends Component {
                 </span>
 
                 <Link to={{
-                  pathname: '/home/update_location',
-                  linkProps: {
-                    location: location
-                  }
+                  pathname: '/update_location',
+                  location: location
+
                 }}>
 
-                  {/* <span className='pencil' name={'name'} value={location.city}><span>🖋</span>
-                </span> */}
+                  <span className='pencil' name={'name'} value={location.city}><span>🖋</span>
+                  </span>
+                </Link>
+                <Link to={{
+                  pathname: '/show_location',
+                  location: location
+
+                }}>
+
+                  <span className='pencil' name={'name'} value={location.city}><span>🖋</span>
+                  </span>
                 </Link>
 
-                {/* <span className='pencil' name={'name'} value={location.city} onClick={() => this.showModalUpdate(location)}><span>📖</span>
-              </span> */}
               </span>
+              
             </div>
           </div>
           <span className="stubborn">{location.country}</span>

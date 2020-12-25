@@ -1,6 +1,6 @@
 import React from 'react';
 import "./Header.scss"
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip'
 
 
@@ -9,7 +9,7 @@ const Header = (props) => {
   return (
     <header>
       <nav>
-        <a href="./">My Travelogue</a>
+        <Link to="/">My Travelogue</Link>
         {/* <span>pin your memories to the map</span> */}
 
         <div className='header_icons'>
@@ -29,4 +29,4 @@ const Header = (props) => {
   )
 }
 
-export default Header;
+export default withRouter(Header);
