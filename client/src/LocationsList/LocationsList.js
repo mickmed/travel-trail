@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom'
-import "./LocationList.css";
+import "./LocationList.scss";
 let faves = []
 
 class LocationsList extends Component {
@@ -83,7 +83,7 @@ class LocationsList extends Component {
   renderList = (location, index) => {
     let className
     if (this.state.ClickedLocation === location) {
-      className = "clickedLocation"
+      className = "clicked-location"
     }
 
     return (
@@ -93,47 +93,42 @@ class LocationsList extends Component {
           className={`location`}
           onClick={() => this.renderClickedLocation(location)}
         >
-          <div className='left-panel'>
-            <p className="location-name">
-              {location.city + ' '}
-            </p>
 
+          <p className="location-name">
+            {location.city + ' '}
+          </p>
+
+
+
+          <div className="country-wrapper">
+            <span className="country">{location.country}</span>
             <div className='icons'>
               <span className='icons-wrapper'>
-                <span className='favStar' name={'name'} value={location.city} onClick={() => this.favClick(location)}> {this.state.faves && this.state.faves.includes(location) ? <span className="blueheart">💙</span> : <span className="greenheart">💚</span>}
+                <span className='fav-star' name={'name'} value={location.city} onClick={() => this.favClick(location)}> {this.state.faves && this.state.faves.includes(location) ? <span className="blueheart">💙</span> : <span className="greenheart">💚</span>}
                 </span>
 
-                <Link to={{
-                  pathname: '/update_location',
-                  location: location
-
-                }}>
-
-                  <span className='pencil' name={'name'} value={location.city}><span>🖋</span>
-                  </span>
-                </Link>
+               
                 <Link to={{
                   pathname: '/show_location',
                   location: location
 
                 }}>
 
-                  <span className='pencil' name={'name'} value={location.city}><span>🖋</span>
+                  <span className='pencil' name={'name'} value={location.city}><span>👁</span>
                   </span>
                 </Link>
 
               </span>
-              
+
             </div>
           </div>
-          <span className="stubborn">{location.country}</span>
         </div>
         {/* <img
           src={
             location.images[0].imageBase64 &&
             location.images[0].imageBase64
           }
-          alt={location.images[0].name}
+          alt={location.images[0].name}a
         /> */}
 
       </div>
@@ -146,7 +141,7 @@ class LocationsList extends Component {
     let locationsTemp = [...this.state.locations]
 
     return (
-      <div className="locationsList">
+      <div className="locations-list">
 
         {this.props.renderFavsStatus &&
           this.state.faves && this.state.faves && this.renderFaves(locationsTemp, this.state.faves && this.state.faves)}

@@ -181,8 +181,8 @@ class Map extends React.Component {
   _resize = () => {
     const AppDims = document.querySelector(".mapWrapper")
     this._onViewportChange({
-      width: AppDims.offsetWidth,
-      height: AppDims.offsetHeight - AppDims.offsetHeight / 10
+      // width: AppDims.offsetWidth,
+      // height: AppDims.offsetHeight - AppDims.offsetHeight / 10
     });
   }
 

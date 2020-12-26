@@ -3,8 +3,6 @@ import "./Header.scss"
 import { Link, withRouter } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip'
 
-
-
 const Header = (props) => {
   return (
     <header>

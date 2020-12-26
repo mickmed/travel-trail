@@ -32,7 +32,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header renderList={this.renderList} />
-        <div className="AppMargin">
+        <div className="app-margin">
 
           <Route path="/" render={(props) => <Home {...props}
             renderFavsStatus={this.state.renderFavsStatus}

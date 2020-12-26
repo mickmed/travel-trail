@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./LocationAdd.css";
+import "./LocationAdd.scss";
 import Uploader from "../Uploader/Uploader";
 import { Link, Redirect } from "react-router-dom"
 
@@ -27,10 +27,10 @@ class LocationAdd extends Component {
     let redirectFromRefresh = this.props.location.latitude === undefined && <Redirect to={'./'} />
 
     return (
-      <div className={"modalAddLocation"}>
+      <div className={"add-location-wrapper"}>
 
-        <section className="modalMainAddLocation">
-          <div className="toprowAddLocation">
+        <section className="add-location">
+          <div className='top'>
             <h1 className="title">Add a new location</h1>
             {redirectFromRefresh}
             <Link to="/">

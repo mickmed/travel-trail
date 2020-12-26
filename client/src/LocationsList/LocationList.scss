@@ -1,0 +1,73 @@
+.locations-list {
+  padding: 2%;
+  width: 50%;
+  height: 50vh;
+  overflow: hidden;
+  overflow-y: auto;
+  font-family: "Archivo", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.location-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2%;
+  background-image: linear-gradient(to bottom, rgb(136, 193, 226), rgba(249, 252, 252, 0.5));
+  width: 90%;
+  margin: 0 auto;
+  padding: 2%;
+  color: white;
+  .location {
+    display: flex;
+    flex-direction: column;
+    // margin-bottom: 1%;
+    padding: 1%;
+    width: 100%;
+    font-family: "Comfortaa", cursive;
+    font-size: 1em;
+    margin-block-start: 0;
+    
+    .location-name {
+      margin: 0;
+      margin-bottom: 8%;
+      font-size: 1em;
+      
+    }
+    .country-wrapper{
+      font-family: "Comfortaa";
+      font-size: 0.7em;
+      color:black;
+      display:flex;
+      justify-content: space-between;
+      .country{
+
+      }
+    }
+
+  }
+}
+.clicked-location {
+  background-image: linear-gradient(rgb(171, 230, 250), rgb(225, 231, 248));
+}
+img {
+  padding: 1%;
+  height: 4em;
+}
+.icons-wrapper {
+  display: flex;
+  letter-spacing: 0.5em;
+  font-size: 16px;
+}
+.icons {
+}
+
+.blueheart,
+.greenheart {
+  margin-left: 30%;
+  font-size: 15px;
+}
+.blueheart {
+  opacity: 0.7;
+}
+.greenheart {
+  opacity: 0.25;
+}

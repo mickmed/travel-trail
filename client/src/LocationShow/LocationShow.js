@@ -96,6 +96,15 @@ class LocationShow extends Component {
                 close
               </button>
             </Link>
+            <Link to={{
+                  pathname: '/update_location',
+                  location: this.state.location
+
+                }}>
+
+                  <span className='pencil' name={'name'} value={this.state.location.city}><span>🖋</span>
+                  </span>
+                </Link>
 
           </div>
           <div className='lat-long'>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "./Home.css";
+import "./Home.scss";
 import { Route, Switch, withRouter } from "react-router-dom"
 import Map from "../Map/Map";
 import LocationsList from "../LocationsList/LocationsList";
@@ -63,26 +63,31 @@ class Home extends Component {
 
         {this.state.loading == false && "...loading"}
         {this.state.loading == true && (
-          <div className="homeComponent">
+          <div className="home">
 
             <Switch>
-              <Route path={`/add_location`} render={(props) => <div className="locationsListWrapper">{<LocationAdd {...props} getLocations={this.getLocations} />}</div>} />
-              <Route path={`/update_location`} render={(props) => <div className="locationsListWrapper">{<LocationUpdate {...props} getLocations={this.getLocations} />}</div>} />
-
-              <Route path={`/show_location`} render={(props) => <div className="locationsListWrapper">{<LocationShow {...props} getLocations={this.getLocations} />}</div>} />
-              <Route path={`/info`} render={() => <div className="locationsListWrapper"> <Info /></div>} />
+              <Route path={`/add_location`} render={(props) => (
+                <LocationAdd {...props} getLocations={this.getLocations} />
+              )} />
+              <Route path={`/update_location`} render={(props) => (
+                <LocationUpdate {...props} getLocations={this.getLocations} />
+              )} />
+              <Route path={`/show_location`} render={(props) => (
+                <LocationShow {...props} getLocations={this.getLocations} />
+              )} />
+              <Route path={`/info`} render={() => <Info />} />
 
               <Route
                 path={'/'}
-                render={() => <div className="locationsListWrapper"><LocationsList
+                render={() => <LocationsList
                   // key={this.state.locations}
                   locations={this.state.locations}
                   renderFavsStatus={this.props.renderFavsStatus}
                   renderDateStatus={this.props.renderDateStatus}
                   getLocations={this.getLocations}
-                  clickedLocation={this.getClickedLocation} /></div>} />
+                  clickedLocation={this.getClickedLocation} />} />
             </Switch>
-            <div className="mapWrapper">
+            <div className="map-wrapper">
               <Map
                 className="map"
                 key={this.state.locations}
