@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom'
-import './LocationShow.css'
+import './LocationShow.scss'
 import Uploader from '../Uploader/Uploader.js'
 import api from '../Services/ApiHelper'
 
@@ -11,7 +11,7 @@ class LocationShow extends Component {
       updated: false,
       redirect: false,
       deleting: false,
-      location:''
+      location: ''
       // linkProps: this.props && this.props.location.locationInfo
 
     };
@@ -21,10 +21,10 @@ class LocationShow extends Component {
       [event.target.name]: event.target.value
     });
   };
-  
-  componentDidMount(){
+
+  componentDidMount() {
     console.log(this.props)
-    this.setState({location:this.props.location.location})
+    this.setState({ location: this.props.location.location })
   }
   // handleEdit = async event => {
   //   event.preventDefault();
@@ -62,34 +62,34 @@ class LocationShow extends Component {
     event.preventDefault();
 
     try {
-    
+
       api.delete("/locations/" + parseInt(event.target.value))
       console.log('help me')
       await this.props.getLocations()
       this.props.history.push('/')
 
 
-     
+
     } catch (err) {
       console.log(err);
     }
 
   };
   render() {
-    
-console.log(this.state)
-const { latitude, longitude, city, country, summary, images } = this.state.location
+
+    console.log(this.state)
+    const { latitude, longitude, city, country, summary, Images } = this.state.location
     let redirectFromRefresh = !this.props.location.location && <Redirect to={'/'} />
     let uploader = this.state.deleting ? '' : <Uploader update={true} getLocations={this.props.getLocations} />
     return (
-      <div className={"modalAddLocation"}>
-        <section className="modalMainAddLocation">
-          <div className="toprowAddLocation">
+      <div className={"show-location"}>
+        <section className="show-location-section">
+          <div className="title-wrapper">
             <h1 className="title">Show location</h1>
             {redirectFromRefresh}
 
 
-            
+
 
             <Link to="/">
               <button onClick={this.props.handleClose}>
@@ -98,19 +98,28 @@ const { latitude, longitude, city, country, summary, images } = this.state.locat
             </Link>
 
           </div>
+          <div className='lat-long'>
+            <div>{latitude}</div>
+            <div>{longitude}</div>
+          </div>
+          <div className='location-info'>
+            <div>{city}</div>
+            <div>{country}</div>
+            <div>{summary}</div>
+          </div>
+          <div classsName='images'>
+            {Images && Images.map(image => (
+              <img src={image.imageBase64} alt="img" />
 
-          <div>{'string' + latitude}</div>
-          <div>{'string' + this.state.location.city}</div>
-          <div>{'string' + this.state.location.country}</div>
-          <div>{'string' + this.state.location.summary}</div>
-          if this.state.location.imagesthis.state.location.images.map(image => (
-            <div><img src="image" alt="img"/></div>
+            ))}
 
-          ))
+          </div>
 
 
 
-          {uploader}
+
+          {/* 
+          {uploader} */}
 
 
         </section>

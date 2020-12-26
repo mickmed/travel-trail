@@ -34,8 +34,10 @@ class Uploader extends Component {
     if (this.props.location.latitude) {
       try {
         const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.latitude.toFixed(6)}%2C${this.props.location.longitude.toFixed(6)}&pretty=1`)
+        console.log('resp', resp)
         this.setState({
           country: resp.data.results[0].components.country,
+          city:resp.data.results[0].components.county
         })
       } catch (err) {
         console.log(err)

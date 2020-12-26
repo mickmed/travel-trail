@@ -1,0 +1,24 @@
+.show-location {
+  .show-location-section {
+    font-family:'Archivo';
+
+    .title-wrapper {
+      display: flex;
+      justify-content: space-between;
+      .title {
+        font-family: arial;
+      }
+    }
+    .lat-long {
+      display: flex;
+      justify-content: flex-end;
+      align-items:flex-end;
+      flex-direction:column;
+      font-family:'Archivo';
+    }
+    .location-info {
+    }
+    .images {
+    }
+  }
+}
