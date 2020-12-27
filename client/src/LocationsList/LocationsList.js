@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import "./LocationList.scss";
 let faves = []
 
@@ -106,9 +106,15 @@ class LocationsList extends Component {
               <span className='icons-wrapper'>
                 <span className='fav-star' name={'name'} value={location.city} onClick={() => this.favClick(location)}> {this.state.faves && this.state.faves.includes(location) ? <span className="blueheart">💙</span> : <span className="greenheart">💚</span>}
                 </span>
+                <span className='fav-star' name={'name'} value={location.city} onClick={() => this.props.history.push({
+                  pathname: '/show_location',
+                  location: location
+                })}> {<span className="blueheart">👁</span>}
+                </span>
 
-               
-                <Link to={{
+
+
+                {/* <Link to={{
                   pathname: '/show_location',
                   location: location
 
@@ -116,7 +122,7 @@ class LocationsList extends Component {
 
                   <span className='pencil' name={'name'} value={location.city}><span>👁</span>
                   </span>
-                </Link>
+                </Link> */}
 
               </span>
 
@@ -158,4 +164,4 @@ class LocationsList extends Component {
   }
 }
 
-export default LocationsList;
+export default withRouter(LocationsList)

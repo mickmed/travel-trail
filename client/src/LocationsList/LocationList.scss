@@ -1,7 +1,7 @@
 .locations-list {
   padding: 2%;
-  width: 50%;
-  height: 50vh;
+  width: 46%;
+  height: 90%;
   overflow: hidden;
   overflow-y: auto;
   font-family: "Archivo", Tahoma, Geneva, Verdana, sans-serif;
@@ -11,8 +11,8 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 2%;
-  background-image: linear-gradient(to bottom, rgb(136, 193, 226), rgba(249, 252, 252, 0.5));
-  width: 90%;
+  background-image: linear-gradient(to bottom, rgb(118, 168, 197), rgba(249, 252, 252, 0.5));
+  width: 96%;
   margin: 0 auto;
   padding: 2%;
   color: white;
@@ -25,28 +25,39 @@
     font-family: "Comfortaa", cursive;
     font-size: 1em;
     margin-block-start: 0;
-    
+
     .location-name {
       margin: 0;
-      margin-bottom: 8%;
+      margin-bottom: 2%;
       font-size: 1em;
-      
     }
-    .country-wrapper{
+    .country-wrapper {
       font-family: "Comfortaa";
       font-size: 0.7em;
-      color:black;
-      display:flex;
+      color: black;
+      display: flex;
       justify-content: space-between;
-      .country{
-
+      align-items:center;
+      .country {
+      }
+      .icons {
+        .icons-wrapper {
+          display:flex;
+          flex-direction: column;
+          span.fav-star {
+            span {
+              text-decoration: none;
+              font-size: 180%;
+            }
+          }
+        }
       }
     }
-
+    
   }
 }
 .clicked-location {
-  background-image: linear-gradient(rgb(171, 230, 250), rgb(225, 231, 248));
+  background-image: linear-gradient(rgb(35, 110, 10), rgb(225, 231, 248));
 }
 img {
   padding: 1%;

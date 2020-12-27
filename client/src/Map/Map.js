@@ -21,11 +21,11 @@ class Map extends React.Component {
     super(props);
     this.state = {
       viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: window.innerWidth/3,
+        height: window.innerHeight/2,
         latitude: this.props.clickedLocation && this.props.clickedLocation.latitude || this.props.locations[0].latitude,
         longitude: this.props.clickedLocation && this.props.clickedLocation.longitude || this.props.locations[0].longitude,
-        zoom: 1
+        zoom: 4
       },
       pinLong: 0,
       pinLat: 0,
@@ -38,27 +38,30 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
+    console.log('here')
     const AppDims = document.querySelector(".App")
-    if (AppDims.offsetWidth < 900 && AppDims.offsetWidth < AppDims.offsetHeight) {
-      this.setState({
-        viewport: {
-          ...this.state.viewport,
-          width: '100%',
-          height: AppDims.offsetHeight / 2 + 'px',
-          appDims: AppDims,
-        }
-      })
-    }
-    else {
-      this.setState({
-        viewport: {
-          ...this.state.viewport,
-          width: '100%',
-          height: AppDims.offsetHeight / 1.25 + 'px',
-          appDims: AppDims,
-        }
-      })
-    }
+    console.log(AppDims.offsetWidth)
+    // if (AppDims.offsetWidth < 1200 && AppDims.offsetWidth < AppDims.offsetHeight) {
+    //   console.log('here')
+    //   this.setState({
+    //     viewport: {
+    //       ...this.state.viewport,
+    //       width: '50',
+    //       height: AppDims.offsetHeight / 2 + 'px',
+    //       appDims: AppDims,
+    //     }
+    //   })
+    // }
+    // else {
+    //   this.setState({
+    //     viewport: {
+    //       ...this.state.viewport,
+    //       width: '100%',
+    //       height: AppDims.offsetHeight / 1.25 + 'px',
+    //       appDims: AppDims,
+    //     }
+    //   })
+    // }
     window.addEventListener('resize', this._resize);
     this._resize();
   }
@@ -124,10 +127,11 @@ class Map extends React.Component {
   _renderMarker = (location, index) => {
     let color, size
     if (location === this.props.clickedLocation) {
-      color = "blue"
+      color = "green"
+      
       size = 30
     } else {
-      color = "green"
+      color = "blue"
       size = 20
     }
     return (
@@ -179,10 +183,10 @@ class Map extends React.Component {
   };
 
   _resize = () => {
-    const AppDims = document.querySelector(".mapWrapper")
+    const AppDims = document.querySelector(".map-wrapper")
     this._onViewportChange({
-      // width: AppDims.offsetWidth,
-      // height: AppDims.offsetHeight - AppDims.offsetHeight / 10
+      width: AppDims.offsetWidth,
+      height: AppDims.offsetHeight
     });
   }
 
