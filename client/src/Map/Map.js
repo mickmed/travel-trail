@@ -38,9 +38,7 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
-    console.log('here')
     const AppDims = document.querySelector(".App")
-    console.log(AppDims.offsetWidth)
     // if (AppDims.offsetWidth < 1200 && AppDims.offsetWidth < AppDims.offsetHeight) {
     //   console.log('here')
     //   this.setState({
@@ -184,7 +182,6 @@ class Map extends React.Component {
 
   _resize = () => {
     const AppDims = document.querySelector(".map-wrap")
-    console.log(AppDims.offsetWidth)
     this._onViewportChange({
       width: AppDims.offsetWidth,
       height: AppDims.offsetHeight

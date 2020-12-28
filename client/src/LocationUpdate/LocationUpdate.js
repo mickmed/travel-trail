@@ -56,11 +56,14 @@ class LocationUpdate extends Component {
   deleteLocation = async event => {
     event.preventDefault();
 
+    console.log(event.target.value)
+
     try {
     
       api.delete("/locations/" + parseInt(event.target.value))
-      console.log('help me')
-      await this.props.getLocations()
+      
+      let y = await this.props.getLocations()
+      console.log(y)
       this.props.history.push('/')
 
 
@@ -71,7 +74,7 @@ class LocationUpdate extends Component {
 
   };
   render() {
-
+// console.log(this.props)
     let redirectFromRefresh = !this.props.location.location && <Redirect to={'/'} />
     let uploader = this.state.deleting ? '' : <Uploader update={true} getLocations={this.props.getLocations} />
     return (

@@ -16,9 +16,9 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      locations: [],
-      name: "",
-      summary: "",
+      // locations: [],
+      // name: "",
+      // summary: "",
       images: [],
       loading: false
     };
@@ -28,13 +28,22 @@ class Home extends Component {
     console.log('home cdm')
     await this.getLocations();
   };
+  async componentDidUpdate(prevProps, prevState) {
+    console.log(JSON.stringify(prevProps.location.images) !== JSON.stringify(prevState.images))
+    if ('images' in prevProps.location && JSON.stringify(prevProps.location.images) !== JSON.stringify(prevState.images)){
+      // this.setState({ latitude: prevProps.latitude, longitude: prevProps.longitude })
+      console.log('here')
+     await this.getLocations()
+      this.setState({images:prevProps.location.images})
+    }
+  }
 
   getLocations = async (req, res) => {
     try {
-      const fetchLocations = await api.get("/locations/");
-      const locations = fetchLocations.data;
+      const locations = await api.get("/locations/");
+      console.log(locations.data)
       this.setState({
-        locations: locations,
+        locations: locations.data,
         loading: true,
         clickedLocation: null,
 
@@ -71,7 +80,7 @@ class Home extends Component {
                 <LocationUpdate {...props} getLocations={this.getLocations} />
               )} />
               <Route path={`/show_location`} render={(props) => (
-                <LocationShow {...props} getLocations={this.getLocations} />
+                <LocationShow {...props} locations={this.state.locations} getLocations={this.getLocations} />
               )} />
               <Route path={`/info`} render={() => <Info />} />
 

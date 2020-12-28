@@ -23,8 +23,11 @@ class LocationShow extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props)
-    this.setState({ location: this.props.location.location })
+    // console.log(this.props.location.location.id, this.state)
+
+    const locationById = this.props.locations.find(location => location.id === this.props.location.location.id)
+    console.log(locationById)
+    this.setState({ location: locationById })
   }
   // handleEdit = async event => {
   //   event.preventDefault();
@@ -61,7 +64,7 @@ class LocationShow extends Component {
 
   render() {
 
-    console.log(this.state)
+    // console.log(this.state)
     const { latitude, longitude, city, country, summary, Images } = this.state.location
     let redirectFromRefresh = !this.props.location.location && <Redirect to={'/'} />
     let uploader = this.state.deleting ? '' : <Uploader update={true} getLocations={this.props.getLocations} />

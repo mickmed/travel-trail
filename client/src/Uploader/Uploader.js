@@ -47,16 +47,15 @@ class Uploader extends Component {
     this.getGeoLocationInfo()
   }
 
-  async componentDidUpdate(){
+  async componentDidUpdate() {
     // this.getGeoLocationInfo()
-   
+
   }
 
-  async getGeoLocationInfo(){
+  async getGeoLocationInfo() {
     if (this.props.location.latitude) {
       try {
         const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.latitude.toFixed(6)}%2C${this.props.location.longitude.toFixed(6)}&pretty=1`)
-        console.log('resp', resp.data.results[0].components)
         const { country, city, county, village } = resp.data.results[0].components
         this.setState({
           country: country,
@@ -78,37 +77,35 @@ class Uploader extends Component {
     event.preventDefault();
     this.setState({ uploading: true })
     const { id, city, country, summary, latitude, longitude, images } = this.state
-console.log(images)
-    return (
-      await api.put(
-        "/locations/" + id,
-        {
-          city,
-          country,
-          summary,
-          latitude,
-          longitude,
-          images
-        },
+    console.log(images)
+    const resp = await api.put(
+      "/locations/" + id,
+      {
+        city,
+        country,
+        summary,
+        latitude,
+        longitude,
+        images
+      },
 
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
+      {
+        headers: {
+          "Content-Type": "application/json"
         }
-      )
-        .then((res) => this.props.getLocations()
-        )
-        .then((res) => {
-          this.setState({
-            uploading: false,
+      }
+    )
 
-          })
-          this.props.history.push('/')
-          return res
-        })
-
-    );
+    this.setState({
+      uploading: false,
+    })
+    this.props.history.push({
+      pathname: '/',
+      images:images
+    })
+    // const locations = await this.props.getLocations()
+    // console.log(locations)
+    return resp
   }
 
 
@@ -230,7 +227,6 @@ console.log(images)
 
   render() {
     const { images } = this.state;
-    console.log(images)
     const hasImages = images.length > 0;
 
 
@@ -297,7 +293,6 @@ console.log(images)
             </div>
             {hasImages && (
               <div className="imagePreview">
-                {console.log(images)}
                 {images.map((image, index) => (
                   <div className="img-wrapper">
 

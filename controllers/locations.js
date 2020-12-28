@@ -40,12 +40,14 @@ const updateLocation = async (req, res) => {
             req.body,
             { returning: true, where: { id: req.params.id } }
         )
-        const images = await Image.findAll({where:{LocationId: req.params.id}})
-        images.forEach(image=>{
-            image.destroy()
-        })
-    
-        req.body.images.forEach(async (image) => {
+        // const images = await Image.findAll({where:{LocationId: req.params.id}})
+        // await images.forEach(image=>{
+        //     image.destroy()
+        // })
+        const images = await Image.destroy({where:{LocationId:req.params.id}})
+
+        console.log(images)
+        await req.body.images.forEach(async (image) => {
             const images = await Image.create({
                 name: image.name,
                 imageBase64: image.imageBase64,
@@ -62,7 +64,9 @@ const updateLocation = async (req, res) => {
 const deleteLocation = async(req, res) => {
     console.log(req.body.id)
     try{
+        const images = await Image.destroy({where:{LocationId:req.params.id}})
         const location = await Location.destroy({where:{id:req.params.id}})
+        res.json(location)
     }catch(error){
         res.status(500).json({error: error.message})
     }
