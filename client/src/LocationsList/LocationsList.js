@@ -7,7 +7,6 @@ class LocationsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModalUpdate: false,
       location: null,
       isFavorite: false,
       isFave: null,
@@ -15,13 +14,7 @@ class LocationsList extends Component {
     };
   }
 
-  showModalUpdate = (arr) => {
-    this.setState({ showModalUpdate: !this.state.showModalUpdate });
-    this.setState({ location: arr })
-  };
-
   favClick = (loc) => {
-    console.log(loc)
     if (faves.includes(loc)) {
       let fav = faves.indexOf(loc)
       faves.splice(fav, 1)
@@ -29,6 +22,11 @@ class LocationsList extends Component {
       faves.push(loc)
       this.setState({ faves: faves })
     }
+  }
+
+  renderClickedLocation = (location) => {
+    this.props.clickedLocation(location)
+    this.setState({ ClickedLocation: location })
   }
 
   renderFaves = (locations, faves) => {
@@ -42,10 +40,8 @@ class LocationsList extends Component {
   }
 
   renderDateOrder = (locationsTemp) => {
-
     let locationsOrder = locationsTemp
     function compare(a, b) {
-      // Use toUpperCase() to ignore character casing
       const dateA = a.createdAt
       const dateB = b.createdAt
 
@@ -57,15 +53,14 @@ class LocationsList extends Component {
       }
       return comparison;
     }
-
     locationsOrder.sort(compare);
-
     return (
       locationsOrder.map((location, index) => (
         this.renderList(location, index)
       ))
     )
   }
+
   renderAll = (locations) => {
     return (
       locations &&
@@ -75,10 +70,7 @@ class LocationsList extends Component {
     )
   }
 
-  renderClickedLocation = (location) => {
-    this.props.clickedLocation(location)
-    this.setState({ ClickedLocation: location })
-  }
+  
 
   renderList = (location, index) => {
     let className
@@ -87,76 +79,49 @@ class LocationsList extends Component {
     }
 
     return (
-      <div className={`location-wrapper ${className}`}>
+      <div className={`location-wrapper ${className}`} onDoubleClick={() => this.props.history.push({
+        pathname: '/show_location',
+        location: location
+      })}>
         <div
           key={index}
           className={`location`}
           onClick={() => this.renderClickedLocation(location)}
         >
-
           <p className="location-name">
             {location.city + ' '}
           </p>
-
-
-
           <div className="country-wrapper">
             <span className="country">{location.country}</span>
             <div className='icons'>
               <span className='icons-wrapper'>
-                <span className='fav-star' name={'name'} value={location.city} onClick={() => this.favClick(location)}> {this.state.faves && this.state.faves.includes(location) ? <span className="blueheart">💙</span> : <span className="greenheart">💚</span>}
+                <span className='heart' name={'name'} value={location.city} onClick={() => this.favClick(location)}> {this.state.faves && this.state.faves.includes(location) ? <span className="heart">💚</span> : <span className="heart">💜</span>}
                 </span>
-                <span className='fav-star' name={'name'} value={location.city} onClick={() => this.props.history.push({
-                  pathname: '/show_location',
-                  location: location
-                })}> {<span className="blueheart">👁</span>}
-                </span>
-
-
-
-                {/* <Link to={{
-                  pathname: '/show_location',
-                  location: location
-
-                }}>
-
-                  <span className='pencil' name={'name'} value={location.city}><span>👁</span>
-                  </span>
-                </Link> */}
-
               </span>
-
             </div>
           </div>
         </div>
-        {/* <img
-          src={
-            location.images[0].imageBase64 &&
-            location.images[0].imageBase64
-          }
-          alt={location.images[0].name}a
-        /> */}
-
       </div>
     )
   }
 
 
   render() {
-    const { locations } = this.props;
-    let locationsTemp = [...this.state.locations]
+    const { locations, renderFavsStatus, renderDateStatus } = this.props
+    const { faves, ...locationsTemp } = this.state
+    // let locationsTemp = [...this.state.locations]
 
     return (
       <div className="locations-list">
 
-        {this.props.renderFavsStatus &&
-          this.state.faves && this.state.faves && this.renderFaves(locationsTemp, this.state.faves && this.state.faves)}
+        {renderFavsStatus &&
+          faves && faves && this.renderFaves(locationsTemp, faves && faves)}
 
-        {this.props.renderDateStatus &&
+        {renderDateStatus &&
           this.renderDateOrder(locationsTemp)}
 
-        {!this.props.renderFavsStatus && !this.props.renderDateStatus &&
-          this.renderAll(this.state.locations)}
+        {!renderFavsStatus && !renderDateStatus &&
+          this.renderAll(locations)}
 
 
       </div>

@@ -31,13 +31,36 @@ class Uploader extends Component {
   }
 
   async componentDidMount() {
+    // if (this.props.location.latitude) {
+    //   try {
+    //     const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.latitude.toFixed(6)}%2C${this.props.location.longitude.toFixed(6)}&pretty=1`)
+    //     console.log('resp', resp.data.results[0].components)
+    //     const { country, city, county, village } = resp.data.results[0].components
+    //     this.setState({
+    //       country: country,
+    //       city: city || county || village
+    //     })
+    //   } catch (err) {
+    //     console.log(err)
+    //   }
+    // }
+    this.getGeoLocationInfo()
+  }
+
+  async componentDidUpdate(){
+    // this.getGeoLocationInfo()
+   
+  }
+
+  async getGeoLocationInfo(){
     if (this.props.location.latitude) {
       try {
         const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.latitude.toFixed(6)}%2C${this.props.location.longitude.toFixed(6)}&pretty=1`)
-        console.log('resp', resp)
+        console.log('resp', resp.data.results[0].components)
+        const { country, city, county, village } = resp.data.results[0].components
         this.setState({
-          country: resp.data.results[0].components.country,
-          city:resp.data.results[0].components.county
+          country: country,
+          city: city || county || village
         })
       } catch (err) {
         console.log(err)
@@ -55,7 +78,7 @@ class Uploader extends Component {
     event.preventDefault();
     this.setState({ uploading: true })
     const { id, city, country, summary, latitude, longitude, images } = this.state
-
+console.log(images)
     return (
       await api.put(
         "/locations/" + id,
@@ -94,6 +117,7 @@ class Uploader extends Component {
     this.setState({ uploading: true })
     const { city, country, summary, latitude, longitude, images } = this.state
     if (city && country && summary && latitude && longitude && images) {
+      console.log(images)
 
       const resp = await api.post(
         "/locations",
@@ -119,11 +143,6 @@ class Uploader extends Component {
 
       })
       this.props.history.push('/')
-
-
-
-
-
     }
   }
 

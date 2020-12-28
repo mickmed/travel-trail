@@ -58,23 +58,7 @@ class LocationShow extends Component {
   // }
 
 
-  deleteLocation = async event => {
-    event.preventDefault();
 
-    try {
-
-      api.delete("/locations/" + parseInt(event.target.value))
-      console.log('help me')
-      await this.props.getLocations()
-      this.props.history.push('/')
-
-
-
-    } catch (err) {
-      console.log(err);
-    }
-
-  };
   render() {
 
     console.log(this.state)
@@ -82,56 +66,46 @@ class LocationShow extends Component {
     let redirectFromRefresh = !this.props.location.location && <Redirect to={'/'} />
     let uploader = this.state.deleting ? '' : <Uploader update={true} getLocations={this.props.getLocations} />
     return (
-      <div className={"show-location"}>
-        <section className="show-location-section">
-          <div className="title-wrapper">
-            <h1 className="title">Show location</h1>
-            {redirectFromRefresh}
 
+      <div className={`location-show`}>
+        {redirectFromRefresh}
+        <div className={`location`}>
+          <div className='lat-long'>
+            <div>{`lat: ${latitude && latitude.toFixed(4)}`}</div>
+            <div>{`long: ${longitude && longitude.toFixed(4)}`}</div>
+          </div>
+          <p className="location-name">
+            {city + ' '}
+          </p>
+          <div className="country-wrapper">
+            <span className="country">{country}</span>
+          </div>
+          <div className='summary'>{summary}</div>
+        </div>
+        <div className='images'>
+          {Images && Images.map(image => (
+            <img src={image.imageBase64} alt="img" />
 
-
-
+          ))}
+          <div className='buttons'>
             <Link to="/">
               <button onClick={this.props.handleClose}>
                 close
-              </button>
+            </button>
             </Link>
             <Link to={{
-                  pathname: '/update_location',
-                  location: this.state.location
+              pathname: '/update_location',
+              location: this.state.location
 
-                }}>
+            }}>
 
-                  <span className='pencil' name={'name'} value={this.state.location.city}><span>🖋</span>
-                  </span>
-                </Link>
-
+              <span className='pencil' name={'name'} value={this.state.location.city}><span>🖋</span>
+              </span>
+            </Link>
           </div>
-          <div className='lat-long'>
-            <div>{latitude}</div>
-            <div>{longitude}</div>
-          </div>
-          <div className='location-info'>
-            <div>{city}</div>
-            <div>{country}</div>
-            <div>{summary}</div>
-          </div>
-          <div classsName='images'>
-            {Images && Images.map(image => (
-              <img src={image.imageBase64} alt="img" />
-
-            ))}
-
-          </div>
+        </div>
 
 
-
-
-          {/* 
-          {uploader} */}
-
-
-        </section>
       </div>
     );
   }

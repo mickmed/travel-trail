@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Header from "../Header/Header"
-import Home from "../Home/Home";
+import Layout from "../Layout/Layout";
 import { Route } from "react-router-dom"
 
 class App extends Component {
@@ -32,13 +32,18 @@ class App extends Component {
     return (
       <div className="App">
         <Header renderList={this.renderList} />
-        <div className="app-margin">
 
-          <Route path="/" render={(props) => <Home {...props}
-            renderFavsStatus={this.state.renderFavsStatus}
-            renderDateStatus={this.state.renderDateStatus}
-          />} />
-         </div>
+
+      
+
+
+
+
+
+        <Route path="/" render={(props) => <Layout {...props}
+          renderFavsStatus={this.state.renderFavsStatus}
+          renderDateStatus={this.state.renderDateStatus}
+        />} />
       </div>
     );
   }

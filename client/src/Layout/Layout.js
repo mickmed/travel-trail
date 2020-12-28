@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "./Home.scss";
+import "./Layout.scss";
 import { Route, Switch, withRouter } from "react-router-dom"
 import Map from "../Map/Map";
 import LocationsList from "../LocationsList/LocationsList";
@@ -59,11 +59,9 @@ class Home extends Component {
 
 
     return (
-      <div>
-
-        {this.state.loading == false && "...loading"}
-        {this.state.loading == true && (
-          <div className="home">
+      this.state.loading == false ? "...loading" : (
+        <div className='layout'>
+          <div className="content">
 
             <Switch>
               <Route path={`/add_location`} render={(props) => (
@@ -87,19 +85,20 @@ class Home extends Component {
                   getLocations={this.getLocations}
                   clickedLocation={this.getClickedLocation} />} />
             </Switch>
-            <div className="map-wrapper">
-              <Map
-                className="map"
-                key={this.state.locations}
-                locations={this.state.locations}
-                getLocations={this.getLocations}
-                clickedLocation={this.state.clickedLocation}
-                getMapClickLatLong={this.getMapClickLatLong}
-              />
-            </div>
           </div>
-        )}
-      </div>
+          <div className='map'>
+            <Map
+
+              key={this.state.locations}
+              locations={this.state.locations}
+              getLocations={this.getLocations}
+              clickedLocation={this.state.clickedLocation}
+              getMapClickLatLong={this.getMapClickLatLong}
+            />
+          </div>
+
+        </div>
+      )
     );
   }
 }
