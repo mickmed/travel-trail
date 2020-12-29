@@ -48,7 +48,7 @@ class Uploader extends Component {
   }
 
   async componentDidUpdate() {
-    // this.getGeoLocationInfo()
+    this.getGeoLocationInfo()
 
   }
 

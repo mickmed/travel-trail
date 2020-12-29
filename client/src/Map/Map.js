@@ -6,7 +6,7 @@ import LocationInfo from "./LocationInfo.js";
 import "./Map.css"
 import { withRouter } from 'react-router-dom'
 
-const MAPBOX_TOKEN = "pk.eyJ1IjoibWlja21lZCIsImEiOiJjanFzdTVtZjEwMnY0NDJzM2g4MXNuNTM0In0.VDbqZxEh0hxXAixRjS9FzA";
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const navStyle = {
   position: "absolute",
