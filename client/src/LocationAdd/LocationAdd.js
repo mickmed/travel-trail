@@ -16,8 +16,7 @@ class LocationAdd extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log(prevProps.location.latitude, prevState.location.longitude)
-console.log('cdmcdm')
+
     if (prevProps.latitude !== prevState.latitude) {
       this.setState({ latitude: prevProps.latitude, longitude: prevProps.longitude })
     }

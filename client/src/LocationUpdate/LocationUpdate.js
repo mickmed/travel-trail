@@ -62,9 +62,8 @@ class LocationUpdate extends Component {
     
       api.delete("/locations/" + parseInt(event.target.value))
       
-      let y = await this.props.getLocations()
-      console.log(y)
-      this.props.history.push('/')
+     
+      this.props.history.push({pathname:'/', images:'images'})
 
 
      

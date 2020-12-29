@@ -73,11 +73,42 @@ class Uploader extends Component {
     });
   };
 
+  handleSubmit = async event => {
+    event.preventDefault()
+    this.setState({ uploading: true })
+    const { city, country, summary, latitude, longitude, images } = this.state
+    const resp = await api.post(
+      "/locations",
+      {
+        city,
+        country,
+        summary,
+        latitude,
+        longitude,
+        images
+      },
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    )
+
+    this.setState({
+      uploading: false,
+    })
+    this.props.history.push({
+      pathname: '/',
+      images: images
+    })
+    return resp
+  }
+
+
   handleUpdate = async event => {
     event.preventDefault();
     this.setState({ uploading: true })
     const { id, city, country, summary, latitude, longitude, images } = this.state
-    console.log(images)
     const resp = await api.put(
       "/locations/" + id,
       {
@@ -95,55 +126,39 @@ class Uploader extends Component {
         }
       }
     )
-
     this.setState({
       uploading: false,
     })
     this.props.history.push({
       pathname: '/',
-      images:images
+      images: images
     })
-    // const locations = await this.props.getLocations()
-    // console.log(locations)
     return resp
   }
 
-
-  handleSubmit = async event => {
-    event.preventDefault()
-    this.setState({ uploading: true })
-    const { city, country, summary, latitude, longitude, images } = this.state
-    if (city && country && summary && latitude && longitude && images) {
-      console.log(images)
-
-      const resp = await api.post(
-        "/locations",
-        {
-          city,
-          country,
-          summary,
-          latitude,
-          longitude,
-          images
-        },
-
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
+  deletePhoto = async (e) => {
+    let id = e.target.getAttribute('id')
+    let name = e.target.getAttribute('value')
+    try {
+      const deleteImage = await api.delete('https://my-travelogue.herokuapp.com/images/' + id)
+      let images = this.state.images.filter((elem) => {
+        if (elem.name !== name) {
+          return e
         }
-      )
-      await this.props.getLocations()
-
-      this.setState({
-        uploading: false,
-
       })
-      this.props.history.push('/')
+      this.setState({ images: images })
+
+      let images_new = this.state.images_new.filter((elem) => {
+        if (elem.name !== name) {
+          return e
+        }
+      })
+      this.setState({ images_new: images_new })
+    }
+    catch (err) {
+      console.log(err)
     }
   }
-
-
 
   // https://stackoverflow.com/questions/36280818/how-to-convert-file-to-base64-in-javascript
   // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
@@ -190,40 +205,7 @@ class Uploader extends Component {
     // console.log(previewImages)
   };
 
-  deletePhoto = async (e) => {
-    let id = e.target.getAttribute('id')
-    let name = e.target.getAttribute('value')
-
-    try {
-      const deleteImage = await api.delete('https://my-travelogue.herokuapp.com/images/' + id)
-
-      let images = this.state.images.filter((elem) => {
-
-        if (elem.name !== name) {
-
-          return e
-        }
-      })
-      this.setState({ images: images })
-
-      let images_new = this.state.images_new.filter((elem) => {
-
-        if (elem.name !== name) {
-
-
-          return e
-        }
-      })
-      this.setState({ images_new: images_new })
-
-
-      // console.log(images, images_new);
-
-    }
-    catch (err) {
-      console.log(err)
-    }
-  }
+ 
 
   render() {
     const { images } = this.state;

@@ -29,8 +29,9 @@ class Home extends Component {
     await this.getLocations();
   };
   async componentDidUpdate(prevProps, prevState) {
-    console.log(JSON.stringify(prevProps.location.images) !== JSON.stringify(prevState.images))
-    if ('images' in prevProps.location && JSON.stringify(prevProps.location.images) !== JSON.stringify(prevState.images)){
+    console.log(prevProps, prevState)
+    console.log(JSON.stringify(prevProps.history.location.images) !== JSON.stringify(prevState.images))
+    if ('location' in prevProps.history && JSON.stringify(prevProps.history.location.images) !== JSON.stringify(prevState.images)){
       // this.setState({ latitude: prevProps.latitude, longitude: prevProps.longitude })
       console.log('here')
      await this.getLocations()
@@ -64,7 +65,7 @@ class Home extends Component {
   // }
   render() {
     const { images } = this.state;
-    const hasImages = images.length > 0;
+    // const hasImages = images.length > 0;
 
 
     return (
