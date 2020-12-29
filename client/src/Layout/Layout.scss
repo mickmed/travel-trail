@@ -5,7 +5,7 @@
 	height: 92vh;
 
 	.content, .map {
-		width:46%;
+		width:95%;
 		padding:2%;
 		height:100%;
 	
@@ -14,6 +14,9 @@
 @media only screen and (min-width: 900px) {
 	.layout {
 		flex-direction: row;
+		.content, .map{
+			width: 46%;
+		}
 	}
 }
 @media only screen and (min-height: 1200px) {
