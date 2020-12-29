@@ -5,7 +5,7 @@
 
 ## &#9992; My Travelogue
 
-   Scaled is a recipe calculator that allows users to calculate a ```nutrition facts``` label based on given ingredients. Natural language processing is available, for e.g., '1/2 cup strawberries.' The app uses the free tier of the nutritionix API. Unfortunately this limits calls to 200/day, including undefined returns but is sufficient to showcase the functionality. Also users can save recipes that when retrieved do not make an api call. 
+   My Travelogue is a travel diary. Users click on the map and the name of the city and country autopopulate the form using the opencagedata geolocation API. The pins are saved on the map and when clicked the data can be retreived. Users can also add pics, as well as update and delete their entries. 
  
 
 
@@ -45,6 +45,7 @@
 <br>
 
 <br>
+
 ##### Screenshot
 ![Screenshot](client/public/img/screenshot1.png)
 
