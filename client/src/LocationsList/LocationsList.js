@@ -15,6 +15,7 @@ class LocationsList extends Component {
   }
 
   favClick = (loc) => {
+    console.log(loc)
     if (faves.includes(loc)) {
       let fav = faves.indexOf(loc)
       faves.splice(fav, 1)
@@ -30,10 +31,11 @@ class LocationsList extends Component {
   }
 
   renderFaves = (locations, faves) => {
+    console.log(locations, faves)
     return (
       locations &&
-      locations.map((location, index) => (
-        faves.includes(location) &&
+      faves.map((location, index) => (
+        // faves.includes(location) &&
         this.renderList(location, index)
       ))
     )
@@ -108,8 +110,9 @@ class LocationsList extends Component {
 
   render() {
     const { locations, renderFavsStatus, renderDateStatus } = this.props
-    const { faves, ...locationsTemp } = this.state
-    // let locationsTemp = [...this.state.locations]
+    const { faves } = this.state
+    let locationsTemp = [...this.state.locations]
+    console.log(locationsTemp)
 
     return (
       <div className="locations-list">
