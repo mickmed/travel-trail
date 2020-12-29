@@ -56,11 +56,14 @@ class Uploader extends Component {
     if (this.props.location.latitude) {
       try {
         const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.latitude.toFixed(6)}%2C${this.props.location.longitude.toFixed(6)}&pretty=1`)
-        const { country, city, county, village } = resp.data.results[0].components
-        this.setState({
-          country: country,
-          city: city || county || village
-        })
+
+        if (resp) {
+          const { country, city, county, village } = resp.data.results[0].components
+          this.setState({
+            country: country || '',
+            city: city || county || village || ''
+          })
+        }
       } catch (err) {
         console.log(err)
       }
@@ -205,7 +208,7 @@ class Uploader extends Component {
     // console.log(previewImages)
   };
 
- 
+
 
   render() {
     const { images } = this.state;

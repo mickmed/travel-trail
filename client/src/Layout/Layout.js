@@ -29,11 +29,9 @@ class Home extends Component {
     await this.getLocations();
   };
   async componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps, prevState)
     console.log(JSON.stringify(prevProps.history.location.images) !== JSON.stringify(prevState.images))
     if ('location' in prevProps.history && JSON.stringify(prevProps.history.location.images) !== JSON.stringify(prevState.images)){
       // this.setState({ latitude: prevProps.latitude, longitude: prevProps.longitude })
-      console.log('here')
      await this.getLocations()
       this.setState({images:prevProps.location.images})
     }
@@ -42,7 +40,6 @@ class Home extends Component {
   getLocations = async (req, res) => {
     try {
       const locations = await api.get("/locations/");
-      console.log(locations.data)
       this.setState({
         locations: locations.data,
         loading: true,
@@ -70,7 +67,16 @@ class Home extends Component {
 
     return (
       this.state.loading == false ? "...loading" : (
-        <div className='layout'>
+        <div className='layout'>  <div className='map'>
+            <Map
+
+              key={this.state.locations}
+              locations={this.state.locations}
+              getLocations={this.getLocations}
+              clickedLocation={this.state.clickedLocation}
+              getMapClickLatLong={this.getMapClickLatLong}
+            />
+          </div>
           <div className="content">
 
             <Switch>
@@ -96,16 +102,7 @@ class Home extends Component {
                   clickedLocation={this.getClickedLocation} />} />
             </Switch>
           </div>
-          <div className='map'>
-            <Map
-
-              key={this.state.locations}
-              locations={this.state.locations}
-              getLocations={this.getLocations}
-              clickedLocation={this.state.clickedLocation}
-              getMapClickLatLong={this.getMapClickLatLong}
-            />
-          </div>
+        
 
         </div>
       )
