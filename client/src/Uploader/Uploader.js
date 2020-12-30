@@ -55,13 +55,21 @@ class Uploader extends Component {
   async getGeoLocationInfo() {
     if (this.props.location.latitude) {
       try {
-        const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.latitude.toFixed(6)}%2C${this.props.location.longitude.toFixed(6)}&pretty=1`)
+        // const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.latitude.toFixed(6)}%2C${this.props.location.longitude.toFixed(6)}&pretty=1`)
+        console.log(process.env.REACT_APP_GEOLOCATION_KEY2)
 
+        // const resp = await Axios(`http://api.positionstack.com/v1/reverse?access_key=${process.env.REACT_APP_GEOLOCATION_KEY2}&query=40.7638435,-73.9729691`)
+
+
+       const resp = await Axios(`http://open.mapquestapi.com/geocoding/v1/reverse?key=%20jtuKyNy8XlHex58kO8V4MxUS46PDbwJF&location=30.333472,-81.470448&includeRoadMetadata=true&includeNearestIntersection=true`) 
+       console.log(resp)
         if (resp) {
-          const { country, city, county, village } = resp.data.results[0].components
+          // const { country, city, county, village } = resp.data.results[0].components
+          const { country, county, locality} = resp.data[0]
+
           this.setState({
             country: country || '',
-            city: city || county || village || ''
+            city: county || locality || ''
           })
         }
       } catch (err) {
