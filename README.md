@@ -5,7 +5,7 @@
 
 ## &#9992; My Travelogue
 
-   My Travelogue is a travel diary. Users click on the map and the name of the city and country autopopulate the form using the opencagedata geolocation API. The pins are saved on the map and when clicked the data can be retreived. Users can also add pics, as well as update and delete their entries. 
+   My Travelogue is a travel diary. Users click on the map and the name of the city and country autopopulate the form using the Mapquest geolocation API. The pins are saved on the map and when clicked the data can be retreived. Users can also add pics, as well as update and delete their entries. The returned country codes are converted to country names via the Rest Countries API.
  
 
 
@@ -14,7 +14,8 @@
 - React Router
 - React Dropzone
 - Mapbox React GL
-- OpenCage GeoData API
+- Mapquest API
+- Rest Countries API
 - Sass
 - Sequelize
 - Node 
@@ -33,7 +34,8 @@
 
 ### &#128673; Api
 - [Mapbox](https://docs.mapbox.com/api/overview/)
-- [OpenCageData](https://opencagedata.com/api)
+- [MapQuest](https://developer.mapquest.com/)
+- [RestCountries](https://restcountries.eu/#api-endpoints-code)
 
 
 <br>
