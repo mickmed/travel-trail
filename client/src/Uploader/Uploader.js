@@ -61,8 +61,8 @@ class Uploader extends Component {
         // const resp = await Axios(`http://api.positionstack.com/v1/reverse?access_key=${process.env.REACT_APP_GEOLOCATION_KEY2}&query=40.7638435,-73.9729691`)
 
 
-      //  const resp = await Axios(`https://open.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOLOCATION_KEY3}&location=30.333472,-81.470448&includeRoadMetadata=true&includeNearestIntersection=true`) 
-      //  console.log(resp)
+       const resp = await Axios(`https://open.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOLOCATION_KEY3}&location=30.333472,-81.470448&includeRoadMetadata=true&includeNearestIntersection=true`) 
+       console.log(resp)
       //   if (resp) {
       //     // const { country, city, county, village } = resp.data.results[0].components
       //     const { country, county, locality} = resp.data[0]
