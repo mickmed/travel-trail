@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import Header from "../Header/Header"
 import Layout from "../Layout/Layout";
+import Footer from '../Footer/Footer'
 import { Route } from "react-router-dom"
 import "./App.css";
 
@@ -37,6 +38,7 @@ class App extends Component {
           renderFavsStatus={this.state.renderFavsStatus}
           renderDateStatus={this.state.renderDateStatus}
         />} />
+        <Footer/>
       </div>
     );
   }

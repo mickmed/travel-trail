@@ -3,19 +3,23 @@
 	flex-direction: column;
 	width: 100%;
 	height: 90vh;
+	overflow-y: scroll;
+	padding-top:7vh;
 	.content, .map {
 		padding: 2%;
 		width: 95%;
-		// height: 100%;
+		height:46%;
 	// box-sizing:border-box;
+
 
 	}
 }
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 600px) {
 	.layout {
 		flex-direction: row;
 		.content, .map {
 			width: 46%;
+			height:80%;
 		}
 	}
 }

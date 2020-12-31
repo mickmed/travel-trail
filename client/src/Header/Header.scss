@@ -5,11 +5,17 @@ header {
 	border-radius: 10px;
 	background: white;
 	padding: 0 2%;
-	width: 94%;
+	width: 98%;
+	max-width:1190px;
 	height: 7vh;
 	color: lightgreen;
 	font-family: "Archivo";
 	font-size: 1.7em;
+	position:fixed;
+	left:0;
+	right:0;
+	box-sizing:border-box;
+	z-index:2;
 	nav {
 		display: flex;
 		align-items: center;
