@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone'
 import Axios from 'axios'
 import geolocationUrl from '../Services/Geolocation'
 import api from '../Services/ApiHelper'
-import './Uploader.css'
+import './Uploader.scss'
 
 
 class Uploader extends Component {
@@ -212,7 +212,7 @@ class Uploader extends Component {
     return (
       <div className="uploader">
         {/* {redirectToList} */}
-        <form className="addLocationForm" onSubmit={this.props.update === true ? this.handleUpdate : this.handleSubmit}>
+        <form className="add-location-form" onSubmit={this.props.update === true ? this.handleUpdate : this.handleSubmit}>
           <div className="fields">
             <div className="field">
               {/* <label className="name">City: </label> */}

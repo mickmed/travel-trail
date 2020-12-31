@@ -36,14 +36,12 @@ class LocationUpdate extends Component {
     let redirectFromRefresh = !this.props.location.location && <Redirect to={'/'} />
     let uploader = this.state.deleting ? '' : <Uploader update={true} getLocations={this.props.getLocations} />
     return (
-      <div className={"modalAddLocation"}>
-        <section className="modalMainAddLocation">
-          <div className="toprowAddLocation">
-            <h1 className="title">Edit location</h1>
+        <section className="add-location">
+            <h3 className="title">Edit location</h3>
             {redirectFromRefresh}
 
             <button
-              className="deleteButton"
+              className="delete-button"
               onClick={(e) => this.deleteLocation(e)}
               name="delete"
               value={location.location && location.location.id}>
@@ -55,10 +53,8 @@ class LocationUpdate extends Component {
                 close
               </button>
             </Link>
-          </div>
           {uploader}
         </section>
-      </div>
     )
   }
 }
