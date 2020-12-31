@@ -31,24 +31,12 @@ class Uploader extends Component {
   }
 
   async componentDidMount() {
-    // if (this.props.location.latitude) {
-    //   try {
-    //     const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.latitude.toFixed(6)}%2C${this.props.location.longitude.toFixed(6)}&pretty=1`)
-    //     console.log('resp', resp.data.results[0].components)
-    //     const { country, city, county, village } = resp.data.results[0].components
-    //     this.setState({
-    //       country: country,
-    //       city: city || county || village
-    //     })
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // }
+
     this.getGeoLocationInfo()
   }
 
   async componentDidUpdate() {
-    // this.getGeoLocationInfo()
+    // this.getGeoLocationInfo()  
 
   }
 
@@ -56,16 +44,14 @@ class Uploader extends Component {
     if (this.props.location.latitude) {
       try {
         // const resp = await Axios(geolocationUrl + `key=${process.env.REACT_APP_GEOLOCATION_KEY}&q=${this.props.location.latitude.toFixed(6)}%2C${this.props.location.longitude.toFixed(6)}&pretty=1`)
-        console.log(process.env.REACT_APP_GEOLOCATION_KEY3)
-
         // const resp = await Axios(`http://api.positionstack.com/v1/reverse?access_key=${process.env.REACT_APP_GEOLOCATION_KEY2}&query=40.7638435,-73.9729691`)
-
+        // const { country, city, county, village } = resp.data.results[0].locations[0]
+        //     const { country, county, locality} = resp.data[0]
 
         const resp = await Axios(`https://open.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOLOCATION_KEY3}&location=${this.props.location.latitude.toFixed(6)},${this.props.location.longitude.toFixed(6)}&includeRoadMetadata=true&includeNearestIntersection=true`)
         console.log(resp)
         if (resp) {
-          //     // const { country, city, county, village } = resp.data.results[0].locations[0]
-          //     const { country, county, locality} = resp.data[0]
+
           const { adminArea1, adminArea5, adminArea6 } = resp.data.results[0].locations[0]
 
           const country = await Axios(`https://restcountries.eu/rest/v2/alpha?codes=${adminArea1}`)
