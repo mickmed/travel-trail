@@ -1,22 +1,19 @@
-import React, { Component } from "react";
-import "./LocationAdd.scss";
-import Uploader from "../Uploader/Uploader";
-import { Link, Redirect } from "react-router-dom"
+import React, { Component } from 'react'
+import Uploader from '../Uploader/Uploader'
+import { Link, Redirect } from 'react-router-dom'
+import './LocationAdd.scss'
 
 class LocationAdd extends Component {
   state = {
     latitude: 0,
     longitude: 0,
     data: null
-
   }
   async componentDidMount() {
-   
-    this.setState({ latitude: this.props.history.location.latitude, longitude: this.props.history.location.longitude })
+       this.setState({ latitude: this.props.history.location.latitude, longitude: this.props.history.location.longitude })
   }
 
   componentDidUpdate(prevProps, prevState) {
-
     if (prevProps.latitude !== prevState.latitude) {
       this.setState({ latitude: prevProps.latitude, longitude: prevProps.longitude })
     }
@@ -27,7 +24,6 @@ class LocationAdd extends Component {
 
     return (
       <div className={"add-location-wrapper"}>
-
         <section className="add-location">
           <div className='top'>
             <h1 className="title">Add a new location</h1>
@@ -45,8 +41,8 @@ class LocationAdd extends Component {
           }
         </section>
       </div>
-    );
+    )
   }
-};
+}
 
-export default LocationAdd;
+export default LocationAdd

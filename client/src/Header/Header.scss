@@ -1,7 +1,6 @@
 header {
 	margin: 0 auto;
-	margin-top:.5%;
-
+	margin-top: .5%;
 	border: 2px solid lightgreen;
 	border-radius: 10px;
 	background: white;
@@ -16,7 +15,6 @@ header {
 		align-items: center;
 		justify-content: space-between;
 		height: 100%;
-		// margin-top: 15%;
 		a {
 			flex: 3;
 			text-decoration: none;
@@ -35,7 +33,6 @@ header {
 			}
 			.info {
 				margin-left: 0.25em;
-				// padding: 2%;
 			}
 		}
 	}

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import "./App.css";
 import Header from "../Header/Header"
 import Layout from "../Layout/Layout";
 import { Route } from "react-router-dom"
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -32,13 +32,6 @@ class App extends Component {
     return (
       <div className="App">
         <Header renderList={this.renderList} />
-
-
-      
-
-
-
-
 
         <Route path="/" render={(props) => <Layout {...props}
           renderFavsStatus={this.state.renderFavsStatus}

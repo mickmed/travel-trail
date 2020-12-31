@@ -3,8 +3,8 @@ import React from "react";
 import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
 import MapPin from "./MapPin";
 import LocationInfo from "./LocationInfo.js";
-import "./Map.css"
 import { withRouter } from 'react-router-dom'
+import "./Map.css"
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -14,15 +14,15 @@ const navStyle = {
   left: 0,
   padding: "10px"
 };
-const screenWidth = window.innerWidth
+// const screenWidth = window.innerWidth
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       viewport: {
-        width: window.innerWidth/3,
-        height: window.innerHeight/2,
+        width: window.innerWidth / 3,
+        height: window.innerHeight / 2,
         latitude: this.props.clickedLocation && this.props.clickedLocation.latitude || this.props.locations[0].latitude,
         longitude: this.props.clickedLocation && this.props.clickedLocation.longitude || this.props.locations[0].longitude,
         zoom: 3
@@ -80,45 +80,30 @@ class Map extends React.Component {
         }
       })
     }
-    // return ({
-    //   viewport: {
-    //     ...prevState.viewport,
-    //     pinLat: prevState.viewport.pinLat,
-    //     pinLong: prevState.viewport.pinLong
-    //   }
-    // })
-    //  return ({pinLong:prevState.viewport.pinLong, pinLat:prevState.viewport.pinLat})
-    // console.log(nextProps, prevState)
-    // if(nextProps.clickedLocation && nextProps.clickedLocation.id !== prevState.location.id){
-    //   console.log('here')
-    // }
+
   }
   handleClose = () => {
     this.setState({
       showpics: false
     })
   }
-  // handleStyleLoad = map => (map.resize())
   _onClickMap = (map, evt) => {
     console.log(map.lngLat)
     this.setState({ pinLat: parseFloat(map.lngLat[1]) });
     this.setState({ pinLong: parseFloat(map.lngLat[0]) });
     // this.setState({ renderLocationAdd: true });
     this.props.history.push({
-        pathname:'/add_location',
-        latitude:map.lngLat[1],
-        longitude:map.lngLat[0]
+      pathname: '/add_location',
+      latitude: map.lngLat[1],
+      longitude: map.lngLat[0]
     })
 
-
-   
-    
   }
 
   _onClickPin = location => {
     this.props.history.push({
-        pathname:'/update_location',
-        location
+      pathname: '/update_location',
+      location
     })
   };
 
@@ -126,7 +111,7 @@ class Map extends React.Component {
     let color, size
     if (location === this.props.clickedLocation) {
       color = "green"
-      
+
       size = 30
     } else {
       color = "blue"
@@ -148,8 +133,8 @@ class Map extends React.Component {
           />
         </div>
       </Marker>
-    );
-  };
+    )
+  }
 
   _renderPopup() {
     const { popupInfo } = this.state;
@@ -189,10 +174,10 @@ class Map extends React.Component {
   }
 
   render() {
-    const locations = this.props.locations;
+    const { locations } = this.props
     let { viewport } = this.state
     let locationAdd = this.state.renderLocationAdd
- 
+
     return (
       <div className="map-wrap">
         <ReactMapGL className="mapb"
@@ -217,10 +202,8 @@ class Map extends React.Component {
             <NavigationControl className="navigation" onViewportChange={this._updateViewport} />
           </div>
         </ReactMapGL>
-
-
       </div>
-    );
+    )
   }
 }
 

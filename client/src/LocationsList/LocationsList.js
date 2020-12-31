@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from 'react-router-dom'
 import "./LocationList.scss";
+
 let faves = []
 
 class LocationsList extends Component {
@@ -10,18 +11,18 @@ class LocationsList extends Component {
       location: null,
       isFavorite: false,
       isFave: null,
+      faves: [],
       locations: this.props.locations
     };
   }
 
-  favClick = (loc) => {
-    console.log(loc)
-    if (faves.includes(loc)) {
-      let fav = faves.indexOf(loc)
-      faves.splice(fav, 1)
+  favClick = (location) => {
+    if (this.state.faves.includes(location)) {
+      let fav = faves.indexOf(location)
+      this.state.faves.splice(fav, 1)
     } else {
-      faves.push(loc)
-      this.setState({ faves: faves })
+      this.state.faves.push(location)
+      // this.setState({ faves })
     }
   }
 
@@ -31,11 +32,9 @@ class LocationsList extends Component {
   }
 
   renderFaves = (locations, faves) => {
-    console.log(locations, faves)
     return (
       locations &&
       faves.map((location, index) => (
-        // faves.includes(location) &&
         this.renderList(location, index)
       ))
     )
@@ -72,23 +71,25 @@ class LocationsList extends Component {
     )
   }
 
-  
-
   renderList = (location, index) => {
     let className
+
+    const { history } = this.props
+    const { faves } = this.state
+    const { renderClickedLocation, favClick } = this
     if (this.state.ClickedLocation === location) {
       className = "clicked-location"
     }
-
     return (
-      <div className={`location-wrapper ${className}`} onDoubleClick={() => this.props.history.push({
+
+      <div className={`location-wrapper ${className}`} onDoubleClick={() => history.push({
         pathname: '/show_location',
         location: location
       })}>
         <div
           key={index}
           className={`location`}
-          onClick={() => this.renderClickedLocation(location)}
+          onClick={() => renderClickedLocation(location)}
         >
           <p className="location-name">
             {location.city + ' '}
@@ -97,7 +98,7 @@ class LocationsList extends Component {
             <span className="country">{location.country}</span>
             <div className='icons'>
               <span className='icons-wrapper'>
-                <span className='heart' name={'name'} value={location.city} onClick={() => this.favClick(location)}> {this.state.faves && this.state.faves.includes(location) ? <span className="heart">💚</span> : <span className="heart">💜</span>}
+                <span className='heart' name={'name'} value={location.city} onClick={() => favClick(location)}> {faves && faves.includes(location) ? <span className="heart">💚</span> : <span className="heart">💜</span>}
                 </span>
               </span>
             </div>
@@ -106,7 +107,6 @@ class LocationsList extends Component {
       </div>
     )
   }
-
 
   render() {
     const { locations, renderFavsStatus, renderDateStatus } = this.props

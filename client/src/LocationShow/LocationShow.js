@@ -12,7 +12,6 @@ class LocationShow extends Component {
       redirect: false,
       deleting: false,
       location: ''
-      // linkProps: this.props && this.props.location.locationInfo
 
     };
   }
@@ -23,51 +22,16 @@ class LocationShow extends Component {
   };
 
   componentDidMount() {
-    // console.log(this.props.location.location.id, this.state)
-
     const locationById = this.props.locations.find(location => location.id === this.props.location.location.id)
     console.log(locationById)
     this.setState({ location: locationById })
   }
-  // handleEdit = async event => {
-  //   event.preventDefault();
-  //   this.props.handleClose();
-
-  //   let answer = window.confirm('Are you sure you want to edit?');
-  //   if (answer === true) {
-  //     let updateInfo = {
-  //       city: this.state.city,
-  //       country: this.state.country,
-  //       summary: this.state.summary,
-  //     };
-
-  //     axios
-  //       .put(
-  //         `http://localhost:3000/locations/${this.props.location.locationInfo.id}`,
-  //         updateInfo
-  //       )
-  //       .then(res => console.log(res.data));
-  //   }
-  // };
-  //component mounts before props from modal are passed, so this is needed to set state for controlled form
-  // componentDidUpdate(prevProps) {
-  //   console.log('here')
-  //   prevProps !== this.props &&
-  //     this.setState({
-  //       city: this.props.location && this.props.location.locationInfo.city,
-  //       country: this.props.location && this.props.location.locationInfo.country,
-  //       summary: this.props.location.location && this.props.locationInfo.summary
-  //     })
-  // }
-
-
-
+ 
   render() {
 
-    // console.log(this.state)
     const { latitude, longitude, city, country, summary, Images } = this.state.location
     let redirectFromRefresh = !this.props.location.location && <Redirect to={'/'} />
-    let uploader = this.state.deleting ? '' : <Uploader update={true} getLocations={this.props.getLocations} />
+    // let uploader = this.state.deleting ? '' : <Uploader update={true} getLocations={this.props.getLocations} />
     return (
 
       <div className={`location-show`}>

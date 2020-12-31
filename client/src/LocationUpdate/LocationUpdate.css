@@ -1,12 +1,7 @@
-.editLocation{
-    
-    /* background:green; */
-    padding:5%;
-    
+.editLocation {
+    padding: 5%;
 }
 
-.editLocation .field{
-    width:100%;
+.editLocation .field {
+    width: 100%;
 }
-
-/* comment */

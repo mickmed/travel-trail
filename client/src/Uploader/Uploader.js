@@ -1,14 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import Dropzone from "react-dropzone";
-import "./Uploader.css";
-import Axios from "axios";
+import Dropzone from 'react-dropzone'
+import Axios from 'axios'
 import geolocationUrl from '../Services/Geolocation'
 import api from '../Services/ApiHelper'
+import './Uploader.css'
+
 
 class Uploader extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     const { id, city, country, summary, latitude, longitude, Images } = this.props.location.location || this.props.location
     this.state = {
@@ -27,17 +28,15 @@ class Uploader extends Component {
       latitude,
       longitude,
 
-    };
+    }
   }
 
   async componentDidMount() {
-
     this.getGeoLocationInfo()
   }
 
   async componentDidUpdate() {
     // this.getGeoLocationInfo()  
-
   }
 
   async getGeoLocationInfo() {
@@ -48,12 +47,11 @@ class Uploader extends Component {
         // const { country, city, county, village } = resp.data.results[0].locations[0]
         //     const { country, county, locality} = resp.data[0]
 
-        const resp = await Axios(`https://open.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOLOCATION_KEY3}&location=${this.props.location.latitude.toFixed(6)},${this.props.location.longitude.toFixed(6)}&includeRoadMetadata=true&includeNearestIntersection=true`)
+        const resp = await Axios(`${geolocationUrl}key=${process.env.REACT_APP_GEOLOCATION_KEY3}&location=${this.props.location.latitude.toFixed(6)},${this.props.location.longitude.toFixed(6)}&includeRoadMetadata=true&includeNearestIntersection=true`)
         console.log(resp)
         if (resp) {
 
           const { adminArea1, adminArea5, adminArea6 } = resp.data.results[0].locations[0]
-
           const country = await Axios(`https://restcountries.eu/rest/v2/alpha?codes=${adminArea1}`)
 
           this.setState({
@@ -119,7 +117,6 @@ class Uploader extends Component {
         longitude,
         images
       },
-
       {
         headers: {
           "Content-Type": "application/json"
