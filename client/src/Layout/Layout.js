@@ -67,16 +67,8 @@ class Home extends Component {
 
     return (
       this.state.loading == false ? "...loading" : (
-        <div className='layout'>  <div className='map'>
-            <Map
-
-              key={this.state.locations}
-              locations={this.state.locations}
-              getLocations={this.getLocations}
-              clickedLocation={this.state.clickedLocation}
-              getMapClickLatLong={this.getMapClickLatLong}
-            />
-          </div>
+        <div className='layout'>  
+       
           <div className="content">
 
             <Switch>
@@ -102,7 +94,16 @@ class Home extends Component {
                   clickedLocation={this.getClickedLocation} />} />
             </Switch>
           </div>
-        
+         <div className='map'>
+            <Map
+
+              key={this.state.locations}
+              locations={this.state.locations}
+              getLocations={this.getLocations}
+              clickedLocation={this.state.clickedLocation}
+              getMapClickLatLong={this.getMapClickLatLong}
+            />
+          </div>
 
         </div>
       )
