@@ -41,7 +41,7 @@
 <br>
 
 ### &#127758; Deployed
-- [Current Site on Netlify](https://my-travels.netlify.app/)
+- [Current Site on Netlify](https://travel-trail.netlify.app/)
 
 
 <br>
