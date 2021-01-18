@@ -3,9 +3,9 @@
 ***Mick Roth***
 
 
-## &#9992; My Travelogue
+## &#9992; Travel Keeper
 
-   My Travelogue is a travel diary. Users click on the map and the name of the city and country autopopulate the form using the Mapquest geolocation API. The pins are saved on the map and when clicked the data can be retreived. Users can also add pics, as well as update and delete their entries. The returned country codes are converted to country names via the Rest Countries API.
+   Travel Keeper is a travel diary. Users click on the map and the name of the city and country autopopulate the form using the Mapquest geolocation API. The pins are saved on the map and when clicked the data can be retreived. Users can also add pics, as well as update and delete their entries. The returned country codes are converted to country names via the Rest Countries API.
  
 
 

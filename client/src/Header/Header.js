@@ -7,7 +7,7 @@ const Header = (props) => {
   return (
     <header>
       <nav>
-        <Link to="/">My Travelogue</Link>
+        <Link to="/">Travel Keeper</Link>
         {/* <span>pin your memories to the map</span> */}
         <div className='header_icons'>
           <Link to="/"><span className="list-all" value="all" onClick={props.renderList} data-tip="list order">🌎</span></Link>
