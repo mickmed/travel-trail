@@ -25,7 +25,7 @@ class Map extends React.Component {
         height: window.innerHeight / 2,
         latitude: this.props.clickedLocation && this.props.clickedLocation.latitude || this.props.locations[0].latitude,
         longitude: this.props.clickedLocation && this.props.clickedLocation.longitude || this.props.locations[0].longitude,
-        zoom: 3
+        zoom: 8
       },
       pinLong: 0,
       pinLat: 0,

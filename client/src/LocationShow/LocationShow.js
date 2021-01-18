@@ -56,14 +56,14 @@ class LocationShow extends Component {
           ))}
           <div className='buttons'>
             <Link to="/">
-            <span className='cross' name={'name'} value={this.state.location.city}><span>❌ </span>
+            <span className='cross' name={'name'} value={this.state.location.city}><span>close ❌ </span>
               </span>
             </Link>
             <Link to={{
               pathname: '/update_location',
               location: this.state.location
             }}>
-              <span className='pencil' name={'name'} value={this.state.location.city}><span>🖋 </span>
+              <span className='pencil' name={'name'} value={this.state.location.city}><span>edit 🖋 </span>
               </span>
             </Link>
           </div>

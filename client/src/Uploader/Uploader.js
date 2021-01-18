@@ -137,7 +137,7 @@ class Uploader extends Component {
     let id = e.target.getAttribute('id')
     let name = e.target.getAttribute('value')
     try {
-      const deleteImage = await api.delete('https://my-travelogue.herokuapp.com/images/' + id)
+      const deleteImage = await api.delete('/images/' + id)
       let images = this.state.images.filter((elem) => {
         if (elem.name !== name) {
           return e

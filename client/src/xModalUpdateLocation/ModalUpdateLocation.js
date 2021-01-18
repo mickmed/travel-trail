@@ -3,6 +3,7 @@ import "./ModalUpdateLocation.css";
 import LocationUpdate from "../LocationUpdate/LocationUpdate";
 import Axios from 'axios'
 import Uploader from '../Uploader/Uploader.js'
+import api from "../Services/ApiHelper";
 
 class ModalUpdateLocation extends Component {
   constructor(props) {
@@ -14,9 +15,9 @@ class ModalUpdateLocation extends Component {
     event.preventDefault();
     console.log(event.target.getAttribute("data-location-index"))
     try {
-      const deleteLocation = await Axios.delete(
+      const deleteLocation = await api.delete(
         
-        "https://my-travelogue.herokuapp.com/locations/" +
+        "/locations/" +
           parseInt(event.target.getAttribute("data-location-index"))
       )
       
