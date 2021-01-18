@@ -2,13 +2,13 @@
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-around;
 	margin: 0 auto;
 	margin-bottom: 2%;
 	background-image: linear-gradient(to bottom, rgb(118, 168, 197), rgba(249, 252, 252, 0.5));
 	padding: 5%;
-	width: 96%;
-	// height: 90%;
+	width: 100%;
+	height: 100%;
 	color: white;
 	.location {
 		display: flex;
@@ -16,13 +16,13 @@
 		padding: 1%;
 		width: 100%;
 		font-family: "Comfortaa", cursive;
-		font-size: 1em;
+		// font-size: 1em;
 		margin-block-start: 0;
 		.lat-long {
 			display: flex;
 			align-items: flex-end;
 			justify-content: flex-end;
-			margin-bottom: 5%;
+			margin-bottom: 1%;
 			div {
 				padding: 0 4%;
 			}
@@ -36,20 +36,42 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			margin-bottom: 10%;
+			margin-bottom: 3%;
 			color: black;
 			font-family: "Comfortaa";
-			font-size: 0.7em;
+			
+		}
+		@media only screen and (min-width: 900px) {
+			.location-name{
+				font-size:150%;
+			}
+			.summary {
+				font-size: 110%;
+			}
+		}
+		@media only screen and (min-width: 1200px) {
+			.summary {
+				font-size: 130%;
+			}
 		}
 	}
 	.images {
+		height: 50%;
+
 		img {
-			width: 50%;
+			height: 35%;
+			padding: 2%;
 		}
 		.buttons {
 			display: flex;
-			justify-content: space-between;
-			padding: 10%;
+			justify-content: flex-end;
+			padding: 0 5%;
+			a {
+				padding: 2% 5%;
+				.cross {
+					color: black;
+				}
+			}
 		}
 	}
 }

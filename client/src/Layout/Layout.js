@@ -58,6 +58,15 @@ class Home extends Component {
     return (
       this.state.loading == false ? "...loading" : (
         <div className='layout'>
+           <div className='map'>
+            <Map
+              key={locations}
+              locations={locations}
+              getLocations={getLocations}
+              clickedLocation={this.state.clickedLocation}
+              getMapClickLatLong={this.getMapClickLatLong}
+            />
+          </div>
           <div className="content">
             <Switch>
               <Route path={`/add_location`} render={(props) => (
@@ -81,15 +90,7 @@ class Home extends Component {
                   clickedLocation={getClickedLocation} />} />
             </Switch>
           </div>
-          <div className='map'>
-            <Map
-              key={locations}
-              locations={locations}
-              getLocations={getLocations}
-              clickedLocation={this.state.clickedLocation}
-              getMapClickLatLong={this.getMapClickLatLong}
-            />
-          </div>
+         
         </div>
       )
     );
