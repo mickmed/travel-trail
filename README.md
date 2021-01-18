@@ -49,7 +49,7 @@
 <br>
 
 ##### Screenshot
-![Screenshot](client/public/img/screenshot1.png)
+![Screenshot](client/public/img/travel-trail.png)
 
 <br>
 
