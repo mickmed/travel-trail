@@ -9,7 +9,7 @@
  
 
 
-#### &#x1F682; Technologies	
+### &#x1F682; Technologies	
 - React
 - React Router
 - React Dropzone
@@ -24,7 +24,7 @@
 
 <br>
 
-#### &#x1F68D; Component Diagram
+### &#x1F68D; Component Diagram
 
   
 
